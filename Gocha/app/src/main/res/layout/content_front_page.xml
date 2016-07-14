@@ -14,7 +14,36 @@
     tools:context="com.weareonfire.gocha.gocha.FrontPageActivity">
 
     <TextView
-        android:text="Hello World!"
+        android:id="@+id/title"
+        android:text="Gocha"
+        android:layout_marginTop="@dimen/title_horizontal_margin"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/White"
+        android:textSize="@dimen/title_text_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/single_mode"
+        android:text="Single Mode"
+        android:textColor="@color/White"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@color/colorAccent"
+        android:layout_below="@+id/title"
+        android:layout_width="@dimen/front_page_button_width"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:id="@+id/combat_mode"
+        android:text="Combat Mode"
+        android:textColor="@color/White"
+        android:background="@color/colorAccent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_below="@+id/single_mode"
+        android:layout_width="@dimen/front_page_button_width"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
