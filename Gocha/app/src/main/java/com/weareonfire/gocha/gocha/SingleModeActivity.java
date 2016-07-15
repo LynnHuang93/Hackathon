@@ -26,10 +26,10 @@ public class SingleModeActivity extends AppCompatActivity {
     Random random = new Random();
     private int duration = 2000;
     private int time_gap = 600;
-    private ImageView rightCurrent = (ImageView) findViewById(R.id.rightoutimage);
-    private ImageView leftCurrent = (ImageView) findViewById(R.id.leftoutimage);
-    private ImageView rightNext = (ImageView) findViewById(R.id.rightinimage);
-    private ImageView leftNext = (ImageView)findViewById(R.id.leftinimage);
+    //private ImageView rightCurrent = (ImageView) findViewById(R.id.rightoutimage);
+    //private ImageView leftCurrent = (ImageView) findViewById(R.id.leftoutimage);
+    //private ImageView rightNext = (ImageView) findViewById(R.id.rightinimage);
+    //private ImageView leftNext = (ImageView)findViewById(R.id.leftinimage);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
