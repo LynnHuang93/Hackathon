@@ -26,19 +26,23 @@ public class SingleModeActivity extends AppCompatActivity {
     private Handler rHandler = new Handler(new rightHandlerCallBack());
     private Handler lHandler = new Handler(new leftHandlerCallBack());
     Random random = new Random();
-    private int duration = 2000;
-    private int time_gap = 600;
+    private int duration = 4000;
+    private int time_gap = 2000;
     private int rightCurrent = R.id.rightout;
     private int leftCurrent = R.id.leftout;
     private int rightNext = R.id.rightin;
     private int leftNext = R.id.leftin;
     private boolean gameEnd = false;
     private int points = 0;
+    private boolean reverse = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
+
+        Intent intentstream = getIntent();
+        reverse =intentstream.getBooleanExtra("reverse",false);
 
         tracks.add ((RelativeLayout) findViewById(R.id.leftout));
         tracks.add ((RelativeLayout) findViewById(R.id.leftin));
@@ -49,8 +53,8 @@ public class SingleModeActivity extends AppCompatActivity {
         images.add(R.drawable.ic_invert_colors_black_24dp);
         images.add(R.drawable.ic_report_problem_black_24dp);
 
-        rHandler.sendEmptyMessage(random.nextInt(4));
-        lHandler.sendEmptyMessage(random.nextInt(4));
+        rHandler.sendEmptyMessage(random.nextInt(2)+2);
+        lHandler.sendEmptyMessage(random.nextInt(2));
 
         RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
         RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
@@ -107,7 +111,7 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            Animation animation = new TranslateAnimation(0, 0, -500, 1200);
+            Animation animation = new TranslateAnimation(0, 0, -500, 850);
             animation.setInterpolator(new LinearInterpolator());
             animation.setDuration(4000);
             animation.setFillAfter(false);
@@ -119,9 +123,12 @@ public class SingleModeActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if (currentLayout.getId() == rightCurrent) {
+                    if (currentLayout.getId() == rightCurrent ^ reverse) {
                         if (!gameEnd){
-                            points += 1;}
+                            points += 1;
+                            TextView score = (TextView) findViewById(R.id.ScoreNum);
+                            score.setText(Integer.toString(points));
+                        }
                         currentLayout.removeView(randomImage);
                     } else {
                         gameEnd = true;
@@ -176,7 +183,7 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            Animation animation = new TranslateAnimation(0, 0, -500, 1200);
+            Animation animation = new TranslateAnimation(0, 0, -500, 850);
             animation.setInterpolator(new LinearInterpolator());
             animation.setDuration(4000);
             animation.setFillAfter(false);
@@ -190,7 +197,10 @@ public class SingleModeActivity extends AppCompatActivity {
                 public void onAnimationEnd(Animation animation) {
                     if (currentLayout.getId() == leftCurrent) {
                         if (!gameEnd){
-                        points += 1;}
+                            points += 1;
+                            TextView score = (TextView) findViewById(R.id.ScoreNum);
+                            score.setText(Integer.toString(points));
+                        }
                         currentLayout.removeView(randomImage);
                     } else {
                         gameEnd = true;
