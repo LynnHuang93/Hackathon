@@ -91,6 +91,7 @@ public class StoreActivity extends AppCompatActivity {
                 int cur_octs = octs + oct_num[0];
                 editor.putInt("pearls",cur_pearls);
                 editor.putInt("octs",cur_octs);
+                editor.commit();
                 remain_pearls.setText(String.format("remain: %d",cur_pearls));
                 remain_octs.setText(String.format("remain: %d", cur_octs));
             }

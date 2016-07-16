@@ -130,7 +130,7 @@
                         android:id="@+id/octDes"
                         android:layout_margin="1dp"
                         android:textColor="@color/White"
-                        android:text="Put a shade on the screen"
+                        android:text="Put a shade on the screen (5 coins)"
                         android:layout_gravity="bottom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
