@@ -1,9 +1,11 @@
 package com.weareonfire.gocha.gocha;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,12 +29,17 @@ import android.media.AudioAttributes;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+@TargetApi(VERSION_CODES.LOLLIPOP)
 public class SingleModeActivity extends AppCompatActivity {
     List<RelativeLayout> tracks = new ArrayList<>(4);
     List<Integer> generic_images = new ArrayList<>(2);
@@ -79,13 +86,18 @@ public class SingleModeActivity extends AppCompatActivity {
             .build();
 
     private SoundPool soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
 
-        sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         soundOn = sharedPref.getBoolean("soundOn", true);
         musicOn = sharedPref.getBoolean("musicOn", true);
         editor = sharedPref.edit();
@@ -96,10 +108,10 @@ public class SingleModeActivity extends AppCompatActivity {
         }
         if (musicOn) mPlayer.start();
 
-        tracks.add ((RelativeLayout) findViewById(R.id.leftout));
-        tracks.add ((RelativeLayout) findViewById(R.id.leftin));
-        tracks.add ((RelativeLayout) findViewById(R.id.rightin));
-        tracks.add ((RelativeLayout) findViewById(R.id.rightout));
+        tracks.add((RelativeLayout) findViewById(R.id.leftout));
+        tracks.add((RelativeLayout) findViewById(R.id.leftin));
+        tracks.add((RelativeLayout) findViewById(R.id.rightin));
+        tracks.add((RelativeLayout) findViewById(R.id.rightout));
 
         generic_images.add(R.drawable.goodlittlefish1);
         generic_images.add(R.drawable.goodlittlefish2);
@@ -109,7 +121,7 @@ public class SingleModeActivity extends AppCompatActivity {
         //exempt_images_set.addAll(exempt_images);
 
 
-        rHandler.sendEmptyMessage(random.nextInt(2)+2);
+        rHandler.sendEmptyMessage(random.nextInt(2) + 2);
         lHandler.sendEmptyMessage(random.nextInt(2));
 
         RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
@@ -141,10 +153,10 @@ public class SingleModeActivity extends AppCompatActivity {
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 ImageView randomImage = new ImageView(SingleModeActivity.this);
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
-                RelativeLayout rightCurrentView = (RelativeLayout)findViewById(rightCurrent);
+                RelativeLayout rightCurrentView = (RelativeLayout) findViewById(rightCurrent);
                 rightCurrentView.removeAllViews();
-                RelativeLayout rightNextView = (RelativeLayout)findViewById(rightNext);
-                rightNextView.addView(randomImage,layoutParams);
+                RelativeLayout rightNextView = (RelativeLayout) findViewById(rightNext);
+                rightNextView.addView(randomImage, layoutParams);
                 int tmp = rightCurrent;
                 rightCurrent = rightNext;
                 rightNext = tmp;
@@ -158,15 +170,38 @@ public class SingleModeActivity extends AppCompatActivity {
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 ImageView randomImage = new ImageView(SingleModeActivity.this);
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
-                RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
+                RelativeLayout leftCurrentView = (RelativeLayout) findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
-                RelativeLayout leftNextView = (RelativeLayout)findViewById(leftNext);
+                RelativeLayout leftNextView = (RelativeLayout) findViewById(leftNext);
                 leftNextView.addView(randomImage, layoutParams);
                 int tmp = leftCurrent;
                 leftCurrent = leftNext;
                 leftNext = tmp;
             }
         });
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "SingleMode Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.weareonfire.gocha.gocha/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
     }
 
     private class rightHandlerCallBack implements Handler.Callback {
@@ -174,31 +209,29 @@ public class SingleModeActivity extends AppCompatActivity {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
             float randf = random.nextFloat();
             final int currentImgId;
-            if (randf<=0.8){
+            if (randf <= 0.8) {
                 currentImgId = generic_images.get(random.nextInt(2));
                 randomImage.setImageResource(currentImgId);
 
-            }
-            else if (randf>0.8 && randf<=0.9){
+            } else if (randf > 0.8 && randf <= 0.9) {
                 currentImgId = exempt_image_id;
                 randomImage.setImageResource(currentImgId);
-            }
-            else{
+            } else {
                 currentImgId = ink_image_id;
                 randomImage.setImageResource(currentImgId);
             }
 
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
-            layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
+            layoutParams.setMargins(0, -randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
-            currentLayout.addView(randomImage,layoutParams);
+            currentLayout.addView(randomImage, layoutParams);
             LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
             parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             int totalheight = currentLayout.getMeasuredHeight();
             randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.45f);
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, -0.5f, Animation.RELATIVE_TO_PARENT, 0.45f);
             //Animation animation = new TranslateAnimation(0, 0, -500, 900);
 
             animation.setInterpolator(new LinearInterpolator());
@@ -213,14 +246,14 @@ public class SingleModeActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if (currentLayout.getId() == rightCurrent) {
-                        if (!gameEnd){
+                        if (!gameEnd) {
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
 //                                    Toast.LENGTH_SHORT).show();
                             points += 1;
-                            if (currentImgId==exempt_image_id){ //current image is the exempt pic
+                            if (currentImgId == exempt_image_id) { //current image is the exempt pic
 //                                Toast.makeText(getApplicationContext(), "found an exempt image",
 //                                        Toast.LENGTH_SHORT).show();
-                                if (!exempt_on){
+                                if (!exempt_on) {
                                     exempt_on = true;
                                 }
                                 exempt_val += 2;
@@ -228,21 +261,22 @@ public class SingleModeActivity extends AppCompatActivity {
                                 exempt.setText(Integer.toString(exempt_val));
 
 
-                            }
-                            else if (currentImgId==ink_image_id){ //current image is the ink trigger
+                            } else if (currentImgId == ink_image_id) { //current image is the ink trigger
                                 final ImageView inkImage = (ImageView) findViewById(R.id.ink);
                                 inkImage.setVisibility(View.VISIBLE);
                                 Animation fadeOut = new AlphaAnimation(1, 0);
                                 fadeOut.setInterpolator(new AccelerateInterpolator());
                                 fadeOut.setDuration(2000);
-                                fadeOut.setAnimationListener(new Animation.AnimationListener()
-                                {
-                                    public void onAnimationEnd(Animation animation)
-                                    {
+                                fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                                    public void onAnimationEnd(Animation animation) {
                                         inkImage.setVisibility(View.GONE);
                                     }
-                                    public void onAnimationRepeat(Animation animation) {}
-                                    public void onAnimationStart(Animation animation) {}
+
+                                    public void onAnimationRepeat(Animation animation) {
+                                    }
+
+                                    public void onAnimationStart(Animation animation) {
+                                    }
                                 });
                                 inkImage.startAnimation(fadeOut);
 
@@ -250,22 +284,20 @@ public class SingleModeActivity extends AppCompatActivity {
 
                         }
 
-                            TextView score = (TextView) findViewById(R.id.ScoreNum);
-                            score.setText(Integer.toString(points));
+                        TextView score = (TextView) findViewById(R.id.ScoreNum);
+                        score.setText(Integer.toString(points));
 
 
                         currentLayout.removeView(randomImage);
-                    }
-                    else if (exempt_on){ //exempt is on
+                    } else if (exempt_on) { //exempt is on
                         currentLayout.removeView(randomImage);
-                        exempt_val --;
+                        exempt_val--;
                         TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                         exempt.setText(Integer.toString(exempt_val));
-                        if (exempt_val==0){
+                        if (exempt_val == 0) {
                             exempt_on = false;
                         }
-                    }
-                    else {
+                    } else {
                         currentLayout.removeView(randomImage);
                         endGame();
                     }
@@ -277,7 +309,7 @@ public class SingleModeActivity extends AppCompatActivity {
                 }
             });
             randomImage.startAnimation(animation);
-            rHandler.sendEmptyMessageDelayed(random.nextInt(2)+2, time_gap-100+random.nextInt(200));
+            rHandler.sendEmptyMessageDelayed(random.nextInt(2) + 2, time_gap - 100 + random.nextInt(200));
             return true;
         }
     }
@@ -287,31 +319,29 @@ public class SingleModeActivity extends AppCompatActivity {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
             float randf = random.nextFloat();
             final int currentImgId;
-            if (randf<=0.8){ //control the prob for different imgs
+            if (randf <= 0.8) { //control the prob for different imgs
                 currentImgId = generic_images.get(random.nextInt(2));
                 randomImage.setImageResource(currentImgId);
-            }
-            else if (randf>0.8 && randf<=0.9){
+            } else if (randf > 0.8 && randf <= 0.9) {
                 currentImgId = exempt_image_id;
                 randomImage.setImageResource(currentImgId);
-            }
-            else{
+            } else {
                 currentImgId = ink_image_id;
                 randomImage.setImageResource(currentImgId);
             }
             //randomImage.setImageResource(generic_images.get(random.nextInt(3)));
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
-            layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
+            layoutParams.setMargins(0, -randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
-            currentLayout.addView(randomImage,layoutParams);
+            currentLayout.addView(randomImage, layoutParams);
             LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
 //            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             int totalheight = currentLayout.getHeight();
             int totalwidth = currentLayout.getWidth();
 //            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 //            final int imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, -0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
 
 
             animation.setInterpolator(new LinearInterpolator());
@@ -330,35 +360,36 @@ public class SingleModeActivity extends AppCompatActivity {
 //                        Log.e("Test", "Played sound");
 //                    }
                     if (currentLayout.getId() == leftCurrent) {
-                        if (!gameEnd){
+                        if (!gameEnd) {
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
 //                                    Toast.LENGTH_SHORT).show();
                             points += 1;
-                            if (currentImgId==exempt_image_id){ //current image in exempt set
+                            if (currentImgId == exempt_image_id) { //current image in exempt set
 //                                Toast.makeText(getApplicationContext(), "found an exempt Img",
 //                                        Toast.LENGTH_SHORT).show();
-                                if (!exempt_on){
+                                if (!exempt_on) {
                                     exempt_on = true;
                                 }
                                 exempt_val += 2;
                                 TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                                 exempt.setText(Integer.toString(exempt_val));
 
-                            }
-                            else if (currentImgId==ink_image_id){ //current image is the ink trigger
+                            } else if (currentImgId == ink_image_id) { //current image is the ink trigger
                                 final ImageView inkImage = (ImageView) findViewById(R.id.ink);
                                 inkImage.setVisibility(View.VISIBLE);
                                 Animation fadeOut = new AlphaAnimation(1, 0);
                                 fadeOut.setInterpolator(new AccelerateInterpolator());
                                 fadeOut.setDuration(2000);
-                                fadeOut.setAnimationListener(new Animation.AnimationListener()
-                                {
-                                    public void onAnimationEnd(Animation animation)
-                                    {
+                                fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                                    public void onAnimationEnd(Animation animation) {
                                         inkImage.setVisibility(View.GONE);
                                     }
-                                    public void onAnimationRepeat(Animation animation) {}
-                                    public void onAnimationStart(Animation animation) {}
+
+                                    public void onAnimationRepeat(Animation animation) {
+                                    }
+
+                                    public void onAnimationStart(Animation animation) {
+                                    }
                                 });
                                 inkImage.startAnimation(fadeOut);
 
@@ -369,17 +400,15 @@ public class SingleModeActivity extends AppCompatActivity {
 
                         }
                         currentLayout.removeView(randomImage);
-                    }
-                    else if (exempt_on){ //exempt is on
+                    } else if (exempt_on) { //exempt is on
                         currentLayout.removeView(randomImage);
-                        exempt_val --;
+                        exempt_val--;
                         TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                         exempt.setText(Integer.toString(exempt_val));
-                        if (exempt_val==0){
+                        if (exempt_val == 0) {
                             exempt_on = false;
                         }
-                    }
-                    else {
+                    } else {
                         currentLayout.removeView(randomImage);
                         endGame();
                     }
@@ -392,17 +421,33 @@ public class SingleModeActivity extends AppCompatActivity {
                 }
             });
             randomImage.startAnimation(animation);
-            lHandler.sendEmptyMessageDelayed(random.nextInt(2), time_gap-200+random.nextInt(400));
+            lHandler.sendEmptyMessageDelayed(random.nextInt(2), time_gap - 200 + random.nextInt(400));
             return true;
         }
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "SingleMode Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.weareonfire.gocha.gocha/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
         if (musicOn) mPlayer.stop();
 //        mServ.stopMusic();
 //        doUnbindService();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.disconnect();
     }
 
     private void endGame() {
@@ -412,8 +457,8 @@ public class SingleModeActivity extends AppCompatActivity {
         RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
         leftHalf.setOnClickListener(null);
         LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
-        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
-        gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 10) );
+        TextView gameOverText = (TextView) findViewById(R.id.gameoverpoints);
+        gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 10));
         Button restart = (Button) findViewById(R.id.restart);
         Button quit = (Button) findViewById(R.id.quit);
         restart.setOnClickListener(new View.OnClickListener() {
@@ -433,9 +478,9 @@ public class SingleModeActivity extends AppCompatActivity {
         });
         gameOver.setVisibility(View.VISIBLE);
 
-        int coins = sharedPref.getInt("coins", 0 );
-        editor.putInt("coins",coins + points / 10);
-        coins = sharedPref.getInt("coins",0);
+        int coins = sharedPref.getInt("coins", 0);
+        editor.putInt("coins", coins + points / 10);
+        coins = sharedPref.getInt("coins", 0);
         //Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
         lHandler.removeMessages(0);
         lHandler.removeMessages(1);

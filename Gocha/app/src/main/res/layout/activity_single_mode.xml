@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/backGround"
+    android:background="@drawable/bubbles"
     android:id="@+id/outmost_layout"
     tools:context="com.weareonfire.gocha.gocha.SingleModeActivity">
 
@@ -62,14 +62,12 @@
 
 
         <!--Main game part -->
-
         <RelativeLayout
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/score_mergin"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".89"
-            android:background="@color/button">
+            android:layout_weight=".89">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -101,11 +99,6 @@
                                 android:layout_weight="1">
                             </RelativeLayout>
                         </LinearLayout>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:background="@android:color/white" />
 
                     </RelativeLayout>
                     <RelativeLayout
@@ -140,18 +133,8 @@
                                     android:src="@drawable/ic_record_voice_over_black_24dp"/>
                             </RelativeLayout>
                         </LinearLayout>
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:background="@android:color/white" />
                     </RelativeLayout>
                 </LinearLayout>
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:background="@android:color/white" />
                 <ImageView
                     android:layout_marginTop="0dp"
                     android:layout_width="match_parent"
