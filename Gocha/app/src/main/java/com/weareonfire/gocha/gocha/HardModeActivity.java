@@ -392,8 +392,9 @@ public class HardModeActivity extends AppCompatActivity {
             quit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(HardModeActivity.this, FrontPageActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(HardModeActivity.this, FrontPageActivity.class);
+//                    startActivity(intent);
+                    finish();
                 }
             });
             gameOver.setVisibility(View.VISIBLE);

@@ -441,8 +441,9 @@ public class SingleModeActivity extends AppCompatActivity {
             quit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
+//                    startActivity(intent);
+                    finish();
                 }
             });
             gameOver.setVisibility(View.VISIBLE);
