@@ -9,8 +9,9 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -29,7 +30,8 @@ import java.util.Set;
 public class SingleModeActivity extends AppCompatActivity {
     List<RelativeLayout> tracks = new ArrayList<>(4);
     List<Integer> generic_images = new ArrayList<>(3);
-    List<Integer> exempt_images = new ArrayList<>(2);
+    int exempt_image_id; //id for the exempt pic
+    int ink_image_id; //id for the ink pic
     Set<Integer> exempt_images_set = new HashSet<>();
     private Handler rHandler = new Handler(new rightHandlerCallBack());
     private Handler lHandler = new Handler(new leftHandlerCallBack());
@@ -101,10 +103,10 @@ public class SingleModeActivity extends AppCompatActivity {
         generic_images.add(R.drawable.ic_grade_black_24dp);
         generic_images.add(R.drawable.ic_invert_colors_black_24dp);
         generic_images.add(R.drawable.ic_report_problem_black_24dp);
-        exempt_images.add(R.drawable.ic_pregnant_woman_black_24dp);
-        exempt_images.add(R.drawable.ic_rowing_black_24dp);
-
-        exempt_images_set.addAll(exempt_images);
+        exempt_image_id = R.drawable.ic_pregnant_woman_black_24dp; //assign preg woman to exempt_img_id
+        ink_image_id = R.drawable.ic_rowing_black_24dp; //assign rowing to ink_img_id
+        //exempt_images.add(R.drawable.ic_rowing_black_24dp);
+        //exempt_images_set.addAll(exempt_images);
 
 
         rHandler.sendEmptyMessage(random.nextInt(2)+2);
@@ -149,19 +151,24 @@ public class SingleModeActivity extends AppCompatActivity {
     }
 
     private class rightHandlerCallBack implements Handler.Callback {
-        private int currentImgId;
         public boolean handleMessage(Message m) {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
             float randf = random.nextFloat();
+            final int currentImgId;
             if (randf<=0.8){
                 currentImgId = generic_images.get(random.nextInt(3));
                 randomImage.setImageResource(currentImgId);
 
             }
-            else{
-                currentImgId = exempt_images.get(random.nextInt(2));
+            else if (randf>0.8 && randf<=0.9){
+                currentImgId = exempt_image_id;
                 randomImage.setImageResource(currentImgId);
             }
+            else{
+                currentImgId = ink_image_id;
+                randomImage.setImageResource(currentImgId);
+            }
+
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
@@ -185,15 +192,39 @@ public class SingleModeActivity extends AppCompatActivity {
                         if (!gameEnd){
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
 //                                    Toast.LENGTH_SHORT).show();
-                            points += 1;
-                            if (exempt_images_set.contains(currentImgId)){ //current image in exempt set
+                            if (currentImgId==exempt_image_id){ //current image is the exempt pic
 //                                Toast.makeText(getApplicationContext(), "found an exempt image",
 //                                        Toast.LENGTH_SHORT).show();
+                                points += 1;
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
                                 exempt_val += 2;
+                                TextView exempt = (TextView) findViewById(R.id.ExemptNum);
+                                exempt.setText(Integer.toString(exempt_val));
 
+
+                            }
+                            else if (currentImgId==ink_image_id){ //current image is the ink trigger
+                                final ImageView inkImage = (ImageView) findViewById(R.id.ink);
+                                inkImage.setVisibility(View.VISIBLE);
+                                Animation fadeOut = new AlphaAnimation(1, 0);
+                                fadeOut.setInterpolator(new AccelerateInterpolator());
+                                fadeOut.setDuration(2000);
+                                fadeOut.setAnimationListener(new Animation.AnimationListener()
+                                {
+                                    public void onAnimationEnd(Animation animation)
+                                    {
+                                        inkImage.setVisibility(View.GONE);
+                                    }
+                                    public void onAnimationRepeat(Animation animation) {}
+                                    public void onAnimationStart(Animation animation) {}
+                                });
+                                inkImage.startAnimation(fadeOut);
+
+                            }
+                            else{
+                                points += 1;
                             }
 
                         }
@@ -207,6 +238,8 @@ public class SingleModeActivity extends AppCompatActivity {
                     else if (exempt_on){ //exempt is on
                         currentLayout.removeView(randomImage);
                         exempt_val --;
+                        TextView exempt = (TextView) findViewById(R.id.ExemptNum);
+                        exempt.setText(Integer.toString(exempt_val));
                         if (exempt_val==0){
                             exempt_on = false;
                         }
@@ -258,16 +291,20 @@ public class SingleModeActivity extends AppCompatActivity {
     }
 
     private class leftHandlerCallBack implements Handler.Callback {
-        private int currentImgId;
         public boolean handleMessage(Message m) {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
             float randf = random.nextFloat();
+            final int currentImgId;
             if (randf<=0.8){ //control the prob for different imgs
                 currentImgId = generic_images.get(random.nextInt(3));
                 randomImage.setImageResource(currentImgId);
             }
+            else if (randf>0.8 && randf<=0.9){
+                currentImgId = exempt_image_id;
+                randomImage.setImageResource(currentImgId);
+            }
             else{
-                currentImgId = exempt_images.get(random.nextInt(2));
+                currentImgId = ink_image_id;
                 randomImage.setImageResource(currentImgId);
             }
             //randomImage.setImageResource(generic_images.get(random.nextInt(3)));
@@ -293,17 +330,40 @@ public class SingleModeActivity extends AppCompatActivity {
                 public void onAnimationEnd(Animation animation) {
                     if (currentLayout.getId() == leftCurrent) {
                         if (!gameEnd){
-                            points += 1;
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
 //                                    Toast.LENGTH_SHORT).show();
-                            if (exempt_images_set.contains(currentImgId)){ //current image in exempt set
+                            if (currentImgId==exempt_image_id){ //current image in exempt set
 //                                Toast.makeText(getApplicationContext(), "found an exempt Img",
 //                                        Toast.LENGTH_SHORT).show();
+                                points += 1;
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
                                 exempt_val += 2;
+                                TextView exempt = (TextView) findViewById(R.id.ExemptNum);
+                                exempt.setText(Integer.toString(exempt_val));
 
+                            }
+                            else if (currentImgId==ink_image_id){ //current image is the ink trigger
+                                final ImageView inkImage = (ImageView) findViewById(R.id.ink);
+                                inkImage.setVisibility(View.VISIBLE);
+                                Animation fadeOut = new AlphaAnimation(1, 0);
+                                fadeOut.setInterpolator(new AccelerateInterpolator());
+                                fadeOut.setDuration(2000);
+                                fadeOut.setAnimationListener(new Animation.AnimationListener()
+                                {
+                                    public void onAnimationEnd(Animation animation)
+                                    {
+                                        inkImage.setVisibility(View.GONE);
+                                    }
+                                    public void onAnimationRepeat(Animation animation) {}
+                                    public void onAnimationStart(Animation animation) {}
+                                });
+                                inkImage.startAnimation(fadeOut);
+
+                            }
+                            else{
+                                points += 1;
                             }
                             TextView score = (TextView) findViewById(R.id.ScoreNum);
                             score.setText(Integer.toString(points));
@@ -314,6 +374,8 @@ public class SingleModeActivity extends AppCompatActivity {
                     else if (exempt_on){ //exempt is on
                         currentLayout.removeView(randomImage);
                         exempt_val --;
+                        TextView exempt = (TextView) findViewById(R.id.ExemptNum);
+                        exempt.setText(Integer.toString(exempt_val));
                         if (exempt_val==0){
                             exempt_on = false;
                         }
