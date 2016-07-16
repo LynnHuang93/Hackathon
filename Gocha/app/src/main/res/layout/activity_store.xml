@@ -29,37 +29,31 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight=".30">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:text="Pearl  ×"
-                        android:textColor="@color/White"
-                        android:id="@+id/examptName"
-                        android:layout_margin="5dp"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="top"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:text="0"
-                        android:textColor="@color/White"
-                        android:id="@+id/examptRestNum"
-                        android:layout_margin="5dp"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="top"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                android:layout_weight=".40">
+                <TextView
+                    android:text="Pearl"
+                    android:textColor="@color/White"
+                    android:id="@+id/examptName"
+                    android:textSize="20sp"
+                    android:layout_margin="1dp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Remain: 0"
+                    android:layout_margin="1dp"
+                    android:textColor="@color/White"
+                    android:id="@+id/examptRestNum"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_height="wrap_content" />
                 <TextView
                     android:text="Exampt you from 2 miss"
                     android:textColor="@color/White"
                     android:id="@+id/examptDes"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:layout_gravity="bottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -71,22 +65,27 @@
                 android:layout_width="0dp"
                 android:layout_marginRight="4dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.14"/>
-            <TextView
-                android:id="@+id/examptNum"
+                android:layout_weight="0.10"/>
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="0"
-                android:textSize="80sp"
-                android:textColor="@color/White"
-                android:layout_weight="0.12"/>
+                android:layout_weight="0.10"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/examptNum"
+                    android:layout_width="wrap_content"
+                    android:text="0"
+                    android:textSize="45sp"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/White"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
             <ImageView
                 android:src = "@drawable/ic_add_circle_white_24dp"
                 android:id="@+id/examptPlus"
                 android:layout_marginLeft="4dp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.14"/>
+                android:layout_weight="0.10"/>
 
         </LinearLayout>
         <LinearLayout
@@ -106,35 +105,29 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_weight=".30">
-                   <LinearLayout
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/octName"
-                            android:layout_margin="5dp"
-                            android:textColor="@color/White"
-                            android:text="Octopus  x"
-                            android:textStyle="bold"
-                            android:textSize="17sp"
-                            android:layout_width="match_parent"
-                            android:layout_gravity="top"
-                            android:layout_height="wrap_content" />
-                       <TextView
-                           android:id="@+id/octRestNum"
-                           android:layout_margin="5dp"
-                           android:textColor="@color/White"
-                           android:text="0"
-                           android:textStyle="bold"
-                           android:textSize="17sp"
-                           android:layout_width="match_parent"
-                           android:layout_gravity="top"
-                           android:layout_height="wrap_content" />
-                   </LinearLayout>
+                    android:layout_weight=".40">
+                    <TextView
+                        android:id="@+id/octName"
+                        android:layout_margin="1dp"
+                        android:textColor="@color/White"
+                        android:text="Octopus"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/octRestNum"
+                        android:layout_margin="1dp"
+                        android:textColor="@color/White"
+                        android:text="Remain: 0"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/octDes"
-                        android:layout_margin="5dp"
+                        android:layout_margin="1dp"
                         android:textColor="@color/White"
                         android:text="Put a shade on the screen"
                         android:layout_gravity="bottom"
@@ -148,63 +141,31 @@
                     android:layout_width="0dp"
                     android:layout_marginRight="4dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.14"/>
-                <TextView
-                    android:id="@+id/octNum"
+                    android:layout_weight="0.10"/>
+                <RelativeLayout
                     android:layout_width="0dp"
-                    android:text="0"
-                    android:textSize="80sp"
-                    android:textColor="@color/White"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.12"/>
+                    android:layout_weight="0.10"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/octNum"
+                        android:layout_width="wrap_content"
+                        android:text="0"
+                        android:textSize="45sp"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/White"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
                 <ImageView
                     android:src = "@drawable/ic_add_circle_white_24dp"
                     android:id="@+id/octPlus"
                     android:layout_marginLeft="4dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.14"/>
+                    android:layout_weight="0.10"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/show_pearls"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:src = "@drawable/ic_local_grocery_store_white_24dp"
-            android:layout_width="wrap_content"
-            android:layout_marginRight="4dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
-        <TextView
-            android:layout_width="0dp"
-            android:text="0"
-            android:textSize="80sp"
-            android:textColor="@color/White"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/show_octs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:src = "@drawable/ic_settings_white_24dp"
-            android:layout_width="wrap_content"
-            android:layout_marginRight="4dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
-        <TextView
-            android:layout_width="0dp"
-            android:text="0"
-            android:textSize="80sp"
-            android:textColor="@color/White"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
-    </LinearLayout>>
 
 
     <RelativeLayout
