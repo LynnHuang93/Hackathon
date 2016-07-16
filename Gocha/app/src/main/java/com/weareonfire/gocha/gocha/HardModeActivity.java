@@ -54,15 +54,25 @@ public class HardModeActivity extends AppCompatActivity {
 
     Boolean soundOn;
     Boolean musicOn;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
+
+    int pearlsnum;
+
+    TextView pearlsnumview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
+        pearlsnumview = (TextView)findViewById(R.id.mypearls);
 
-        final SharedPreferences sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
         soundOn = sharedPref.getBoolean("soundOn", true);
         musicOn = sharedPref.getBoolean("musicOn", true);
+        pearlsnum = sharedPref.getInt("pearls", 0);
+        pearlsnumview.setText(Integer.toString(pearlsnum));
+        editor = sharedPref.edit();
 
         mPlayer = MediaPlayer.create(this, R.raw.music1);
         if (mPlayer != null) {
@@ -125,6 +135,19 @@ public class HardModeActivity extends AppCompatActivity {
                 leftNext = tmp;
             }
         });
+
+        final ImageView pearls = (ImageView) findViewById(R.id.pearls);
+        pearls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pearlsnum > 0){
+                    exempt_val += 1;
+                    pearlsnum --;
+                    pearlsnumview.setText(pearlsnum);
+                }
+            }
+        });
+
     }
 
     private class rightHandlerCallBack implements Handler.Callback {
@@ -148,12 +171,8 @@ public class HardModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
-            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            int totalheight = parent.getMeasuredHeight();
-            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.45f);
+
 
 //            Animation animation = new TranslateAnimation(0, 0, -500, 900);
             //float targetY = (float)(currentLayout.getBottom());
@@ -215,35 +234,8 @@ public class HardModeActivity extends AppCompatActivity {
                     }
 
                     else {
-                        gameEnd = true;
-                        RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
-                        rightHalf.setOnClickListener(null);
-                        LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
-                        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
-                        gameOverText.setText("Points: " + points);
-                        Button restart = (Button) findViewById(R.id.restart);
-                        Button quit = (Button) findViewById(R.id.quit);
-                        restart.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = getIntent();
-                                finish();
-                                startActivity(intent);
-                            }
-                        });
-                        quit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(HardModeActivity.this, FrontPageActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                        gameOver.setVisibility(View.VISIBLE);
                         currentLayout.removeView(randomImage);
-                        lHandler.removeMessages(0);
-                        lHandler.removeMessages(1);
-                        rHandler.removeMessages(2);
-                        rHandler.removeMessages(3);
+                        endGame();
                     }
                 }
 
@@ -281,12 +273,8 @@ public class HardModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
-            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            int totalheight = parent.getMeasuredHeight();
-            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.45f);
+
 //            Animation animation = new TranslateAnimation(0, 0, -500, 900);
             //float targetY = (float)(currentLayout.getBottom());
             //Animation animation = new TranslateAnimation(0, 0, -500, targetY);
@@ -356,35 +344,8 @@ public class HardModeActivity extends AppCompatActivity {
                     }
 
                     else {
-                        gameEnd = true;
-                        RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
-                        leftHalf.setOnClickListener(null);
-                        LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
-                        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
-                        gameOverText.setText("Points: " + points);
-                        Button restart = (Button) findViewById(R.id.restart);
-                        Button quit = (Button) findViewById(R.id.quit);
-                        restart.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = getIntent();
-                                finish();
-                                startActivity(intent);
-                            }
-                        });
-                        quit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(HardModeActivity.this, FrontPageActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                        gameOver.setVisibility(View.VISIBLE);
                         currentLayout.removeView(randomImage);
-                        lHandler.removeMessages(0);
-                        lHandler.removeMessages(1);
-                        rHandler.removeMessages(2);
-                        rHandler.removeMessages(3);
+                        endGame();
                     }
 
                 }
@@ -407,4 +368,49 @@ public class HardModeActivity extends AppCompatActivity {
         //mServ.stopMusic();
         //doUnbindService();
     }
+
+    private void endGame() {
+        if (!gameEnd){
+
+            RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
+            rightHalf.setOnClickListener(null);
+            RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
+            leftHalf.setOnClickListener(null);
+            LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
+            TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
+            gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 10) );
+            Button restart = (Button) findViewById(R.id.restart);
+            Button quit = (Button) findViewById(R.id.quit);
+            restart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
+            quit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(HardModeActivity.this, FrontPageActivity.class);
+                    startActivity(intent);
+                }
+            });
+            gameOver.setVisibility(View.VISIBLE);
+            int coins = sharedPref.getInt("coins", 0 );
+            editor.putInt("coins",coins + points / 10);
+            editor.commit();
+
+            //coins = sharedPref.getInt("coins",0);
+            //Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
+            lHandler.removeMessages(0);
+            lHandler.removeMessages(1);
+            rHandler.removeMessages(2);
+            rHandler.removeMessages(3);}
+
+        gameEnd = true;
+
+    };
+
+
 }

@@ -3,9 +3,7 @@ package com.weareonfire.gocha.gocha;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioAttributes;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -70,6 +68,7 @@ public class SingleModeActivity extends AppCompatActivity {
 
     private MediaPlayer mPlayer;
 
+  /*
     // initilzie soundpool and set to the max volume
     AudioAttributes attributes = new AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_GAME)
@@ -77,6 +76,7 @@ public class SingleModeActivity extends AppCompatActivity {
             .build();
 
     private SoundPool soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
+   */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
