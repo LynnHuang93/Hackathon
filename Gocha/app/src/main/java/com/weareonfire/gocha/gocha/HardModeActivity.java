@@ -50,6 +50,8 @@ public class HardModeActivity extends AppCompatActivity {
 
     private MediaPlayer mPlayer;
 
+    Context context = this;
+
     Boolean soundOn;
     Boolean musicOn;
 
@@ -58,7 +60,7 @@ public class HardModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
 
-        final SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        final SharedPreferences sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
         soundOn = sharedPref.getBoolean("soundOn", true);
         musicOn = sharedPref.getBoolean("musicOn", true);
 
