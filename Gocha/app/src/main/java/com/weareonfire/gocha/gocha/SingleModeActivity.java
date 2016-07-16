@@ -2,6 +2,7 @@ package com.weareonfire.gocha.gocha;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -11,8 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +33,12 @@ public class SingleModeActivity extends AppCompatActivity {
     Random random = new Random();
     private int duration = 2000;
     private int time_gap = 600;
+    private int rightCurrent = R.id.rightout;
+    private int leftCurrent = R.id.leftout;
+    private int rightNext = R.id.rightin;
+    private int leftNext = R.id.leftin;
 
-    private ImageView rightCurrent;// = (ImageView) findViewById(R.id.rightoutimage);
-    private ImageView leftCurrent;// = (ImageView) findViewById(R.id.leftoutimage);
-    private ImageView rightNext;// = (ImageView) findViewById(R.id.rightinimage);
-    private ImageView leftNext;// = (ImageView)findViewById(R.id.leftinimage);
+    private int points = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +63,14 @@ public class SingleModeActivity extends AppCompatActivity {
         rightHalf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 ImageView randomImage = new ImageView(SingleModeActivity.this);
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout rightCurrentView = (RelativeLayout)findViewById(rightCurrent);
                 rightCurrentView.removeAllViews();
                 RelativeLayout rightNextView = (RelativeLayout)findViewById(rightNext);
-                rightNextView.addView(randomImage);
+                rightNextView.addView(randomImage,layoutParams);
                 int tmp = rightCurrent;
                 rightCurrent = rightNext;
                 rightNext = tmp;
@@ -70,12 +80,14 @@ public class SingleModeActivity extends AppCompatActivity {
         leftHalf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 ImageView randomImage = new ImageView(SingleModeActivity.this);
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
                 RelativeLayout rightNextView = (RelativeLayout)findViewById(leftNext);
-                rightNextView.addView(randomImage);
+                rightNextView.addView(randomImage, layoutParams);
                 int tmp = leftCurrent;
                 leftCurrent = leftNext;
                 leftNext = tmp;
@@ -93,14 +105,64 @@ public class SingleModeActivity extends AppCompatActivity {
 
     private class rightHandlerCallBack implements Handler.Callback {
         public boolean handleMessage(Message m) {
-            ImageView randomImage = new ImageView(SingleModeActivity.this);
+            final ImageView randomImage = new ImageView(SingleModeActivity.this);
             randomImage.setImageResource(images.get(random.nextInt(3)));
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
-            RelativeLayout currentLayout = tracks.get(m.what);
+            final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            randomImage.animate().y(1600f).setDuration(duration).start();
+            Animation animation = new TranslateAnimation(0, 0, -500, 1200);
+            animation.setInterpolator(new LinearInterpolator());
+            animation.setDuration(4000);
+            animation.setFillAfter(false);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (currentLayout.getId() == rightCurrent) {
+                        points += 1;
+                        currentLayout.removeView(randomImage);
+                    } else {
+                        LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
+                        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
+                        gameOverText.setText("Points: " + points);
+                        Button restart = (Button) findViewById(R.id.restart);
+                        Button quit = (Button) findViewById(R.id.quit);
+                        restart.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+                        quit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        gameOver.setVisibility(View.VISIBLE);
+                        currentLayout.removeView(randomImage);
+                        lHandler.removeMessages(0);
+                        lHandler.removeMessages(1);
+                        rHandler.removeMessages(2);
+                        rHandler.removeMessages(3);
+                    }
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            randomImage.startAnimation(animation);
             rHandler.sendEmptyMessageDelayed(random.nextInt(2)+2, time_gap-100+random.nextInt(200));
             return true;
         }
@@ -108,14 +170,65 @@ public class SingleModeActivity extends AppCompatActivity {
 
     private class leftHandlerCallBack implements Handler.Callback {
         public boolean handleMessage(Message m) {
-            ImageView randomImage = new ImageView(SingleModeActivity.this);
+            final ImageView randomImage = new ImageView(SingleModeActivity.this);
             randomImage.setImageResource(images.get(random.nextInt(3)));
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
-            RelativeLayout currentLayout = tracks.get(m.what);
+            final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            randomImage.animate().y(1600f).setDuration(duration).start();
+            Animation animation = new TranslateAnimation(0, 0, -500, 1200);
+            animation.setInterpolator(new LinearInterpolator());
+            animation.setDuration(4000);
+            animation.setFillAfter(false);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (currentLayout.getId() == leftCurrent) {
+                        points += 1;
+                        currentLayout.removeView(randomImage);
+                    } else {
+                        LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
+                        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
+                        gameOverText.setText("Points: " + points);
+                        Button restart = (Button) findViewById(R.id.restart);
+                        Button quit = (Button) findViewById(R.id.quit);
+                        restart.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        });
+                        quit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        gameOver.setVisibility(View.VISIBLE);
+                        currentLayout.removeView(randomImage);
+                        lHandler.removeMessages(0);
+                        lHandler.removeMessages(1);
+                        rHandler.removeMessages(2);
+                        rHandler.removeMessages(3);
+                    }
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            randomImage.startAnimation(animation);
             lHandler.sendEmptyMessageDelayed(random.nextInt(2), time_gap-200+random.nextInt(400));
             return true;
         }
