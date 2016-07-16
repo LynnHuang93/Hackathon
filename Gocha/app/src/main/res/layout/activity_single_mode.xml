@@ -19,10 +19,9 @@
             android:layout_weight=".11">
             <TextView
                 android:id="@+id/ScoreText"
-                android:text="Score:"
+                android:text="Score: "
                 android:layout_marginTop="@dimen/score_mergin"
                 android:layout_marginLeft="@dimen/score_mergin"
-                android:layout_marginRight="@dimen/score_mergin"
                 android:layout_gravity="top|start"
                 android:textColor="@color/White"
                 android:textSize="@dimen/score_text_size"
@@ -39,10 +38,9 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/ExemptText"
-                android:text="Exempt:"
+                android:text="Exempt: "
                 android:layout_marginTop="@dimen/score_mergin"
                 android:layout_marginLeft="@dimen/score_mergin"
-                android:layout_marginRight="@dimen/score_mergin"
                 android:layout_toRightOf="@id/ScoreNum"
                 android:layout_gravity="top|start"
                 android:textColor="@color/White"
