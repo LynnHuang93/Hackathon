@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -234,7 +235,7 @@ public class SingleModeActivity extends AppCompatActivity {
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
-                                exempt_val += 2;
+                                exempt_val += 1;
                                 TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                                 exempt.setText(Integer.toString(exempt_val));
 
@@ -349,7 +350,7 @@ public class SingleModeActivity extends AppCompatActivity {
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
-                                exempt_val += 2;
+                                exempt_val += 1;
                                 TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                                 exempt.setText(Integer.toString(exempt_val));
 
@@ -445,11 +446,14 @@ public class SingleModeActivity extends AppCompatActivity {
         int coins = sharedPref.getInt("coins", 0 );
         editor.putInt("coins",coins + points / 10);
         editor.putInt("pearls", pearlsnum);
+        editor.commit();
         coins = sharedPref.getInt("coins",0);
-        //Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
         lHandler.removeMessages(0);
         lHandler.removeMessages(1);
         rHandler.removeMessages(2);
         rHandler.removeMessages(3);
+
+
     }
 }

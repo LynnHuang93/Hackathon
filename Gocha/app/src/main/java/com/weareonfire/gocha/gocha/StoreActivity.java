@@ -20,8 +20,8 @@ public class StoreActivity extends AppCompatActivity {
         final SharedPreferences.Editor editor = sharedPref.edit();
         final int pearls = sharedPref.getInt("pearls", 0 ); //currently owned pearls
         final int octs = sharedPref.getInt("octs", 0); //currently owned octs
-        //final int coins = sharedPref.getInt("coins", 0); //real coin number retrieved from the sharedPref
-        final int coins = 10;
+        final int coins = sharedPref.getInt("coins", 0); //real coin number retrieved from the sharedPref
+        //final int coins = 10;
         final TextView balance = (TextView) findViewById(R.id.coin_num); //current balance
         balance.setText(Integer.toString(coins));
         final int pearl_num[] = {0};
@@ -91,6 +91,7 @@ public class StoreActivity extends AppCompatActivity {
                 int cur_octs = octs + oct_num[0];
                 editor.putInt("pearls",cur_pearls);
                 editor.putInt("octs",cur_octs);
+                editor.commit();
                 remain_pearls.setText(String.format("remain: %d",cur_pearls));
                 remain_octs.setText(String.format("remain: %d", cur_octs));
             }
