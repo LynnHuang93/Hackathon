@@ -3,7 +3,9 @@ package com.weareonfire.gocha.gocha;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -51,11 +52,28 @@ public class SingleModeActivity extends AppCompatActivity {
     private int exempt_val = 0;
     //private boolean reverse = false;
 
+    //-- sound effect
+    // private SoundPool soundPool;
+    private int soundID_Coin;
+    private int soundID_Bomb;
+    private int soundID_Bubbles;
+    private int soundID_Absorption;
+
+    boolean loaded = false;
+
     Context context = this;
     Boolean soundOn;
     Boolean musicOn;
 
     private MediaPlayer mPlayer;
+
+    // initilzie soundpool and set to the max volume
+    AudioAttributes attributes = new AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build();
+
+    private SoundPool soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +109,25 @@ public class SingleModeActivity extends AppCompatActivity {
 
         RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
         RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
+
+//        // Set the hardware buttons to control the music
+//        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+//        // Load the sound
+//        soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
+//            @Override
+//            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+//                loaded = true;
+//            }
+//        });
+//        soundID_Coin = soundPool.load(this, R.raw.coin, 1);
+//        soundID_Absorption = soundPool.load(this, R.raw.absorption, 1);
+//        soundID_Bomb = soundPool.load(this, R.raw.bomb, 1);
+//        soundID_Bubbles = soundPool.load(this, R.raw.bubbles, 1);
+//        // Getting the user sound settings
+//        AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+//        float actualVolume = (float) audioManager
+//                .getStreamVolume(AudioManager.STREAM_MUSIC);
+//        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
 
         rightHalf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,12 +188,9 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
-            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            int totalheight = parent.getMeasuredHeight();
-            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(0, 0, -500, totalheight-imageheight/2);
+
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.45f);
+
             //Animation animation = new TranslateAnimation(0, 0, -500, 900);
 
             animation.setInterpolator(new LinearInterpolator());
@@ -263,12 +297,11 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
-            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            int totalheight = parent.getMeasuredHeight();
-            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(0, 0, -500, totalheight-imageheight/2);
+
+//            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//            final int imageheight = randomImage.getMeasuredHeight();
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
+
 
 
             animation.setInterpolator(new LinearInterpolator());
@@ -282,6 +315,10 @@ public class SingleModeActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
+//                    if (loaded) {
+//                        soundPool.play(soundID_Bomb, 1, 1, 1, 0, 1f);
+//                        Log.e("Test", "Played sound");
+//                    }
                     if (currentLayout.getId() == leftCurrent) {
                         if (!gameEnd){
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
@@ -389,7 +426,7 @@ public class SingleModeActivity extends AppCompatActivity {
         int coins = sharedPref.getInt("coins", 0 );
         editor.putInt("coins",coins + points / 10);
         coins = sharedPref.getInt("coins",0);
-        Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
         lHandler.removeMessages(0);
         lHandler.removeMessages(1);
         rHandler.removeMessages(2);
