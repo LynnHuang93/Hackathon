@@ -1,15 +1,10 @@
 package com.weareonfire.gocha.gocha;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -37,7 +32,7 @@ public class SingleModeActivity extends AppCompatActivity {
     private int leftCurrent = R.id.leftout;
     private int rightNext = R.id.rightin;
     private int leftNext = R.id.leftin;
-
+    private boolean gameEnd = false;
     private int points = 0;
 
     @Override
@@ -125,9 +120,13 @@ public class SingleModeActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if (currentLayout.getId() == rightCurrent) {
-                        points += 1;
+                        if (!gameEnd){
+                            points += 1;}
                         currentLayout.removeView(randomImage);
                     } else {
+                        gameEnd = true;
+                        RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
+                        rightHalf.setOnClickListener(null);
                         LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
                         TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
                         gameOverText.setText("Points: " + points);
@@ -190,9 +189,13 @@ public class SingleModeActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     if (currentLayout.getId() == leftCurrent) {
-                        points += 1;
+                        if (!gameEnd){
+                        points += 1;}
                         currentLayout.removeView(randomImage);
                     } else {
+                        gameEnd = true;
+                        RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
+                        leftHalf.setOnClickListener(null);
                         LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
                         TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
                         gameOverText.setText("Points: " + points);
