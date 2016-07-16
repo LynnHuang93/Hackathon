@@ -7,6 +7,133 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/backGround"
     tools:context="com.weareonfire.gocha.gocha.StoreActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/exampt"
+                android:layout_width="0dp"
+                android:src="@drawable/ic_local_grocery_store_white_24dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".30"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight=".30">
+                <TextView
+                    android:text="Pearl"
+                    android:textColor="@color/White"
+                    android:id="@+id/examptName"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Exampt you from 2 miss"
+                    android:textColor="@color/White"
+                    android:id="@+id/examptDes"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <ImageView
+                android:src = "@drawable/ic_remove_circle_white_24dp"
+                android:id="@+id/examptMinus"
+                android:layout_width="0dp"
+                android:layout_marginRight="4dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.14"/>
+            <TextView
+                android:id="@+id/examptNum"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="0"
+                android:textSize="80sp"
+                android:textColor="@color/White"
+                android:layout_weight="0.12"/>
+            <ImageView
+                android:src = "@drawable/ic_add_circle_white_24dp"
+                android:id="@+id/examptPlus"
+                android:layout_marginLeft="4dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.14"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/oct"
+                    android:src="@drawable/ic_settings_white_24dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".30"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight=".30">
+                    <TextView
+                        android:id="@+id/octName"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/White"
+                        android:text="Octopus"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/octDes"
+                        android:layout_margin="5dp"
+                        android:textColor="@color/White"
+                        android:text="Put a shade on the screen"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <ImageView
+                    android:src = "@drawable/ic_remove_circle_white_24dp"
+                    android:id="@+id/octMinus"
+                    android:layout_width="0dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"/>
+                <TextView
+                    android:id="@+id/octNum"
+                    android:layout_width="0dp"
+                    android:text="0"
+                    android:textSize="80sp"
+                    android:textColor="@color/White"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.12"/>
+                <ImageView
+                    android:src = "@drawable/ic_add_circle_white_24dp"
+                    android:id="@+id/octPlus"
+                    android:layout_marginLeft="4dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.14"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

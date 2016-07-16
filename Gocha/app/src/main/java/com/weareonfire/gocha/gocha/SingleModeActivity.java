@@ -43,6 +43,8 @@ public class SingleModeActivity extends AppCompatActivity {
     private int leftNext = R.id.leftin;
     private boolean gameEnd = false;
     private int points = 0;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     private boolean exempt_on = false;
     private int exempt_val = 0;
@@ -59,10 +61,10 @@ public class SingleModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
 
-        final SharedPreferences sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
         soundOn = sharedPref.getBoolean("soundOn", true);
         musicOn = sharedPref.getBoolean("musicOn", true);
-
+        editor = sharedPref.edit();
         mPlayer = MediaPlayer.create(this, R.raw.music1);
         if (mPlayer != null) {
             mPlayer.setLooping(true);
@@ -215,39 +217,10 @@ public class SingleModeActivity extends AppCompatActivity {
                         if (exempt_val==0){
                             exempt_on = false;
                         }
-
                     }
-
                     else {
-                        gameEnd = true;
-                        RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
-                        rightHalf.setOnClickListener(null);
-                        LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
-                        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
-                        gameOverText.setText("Points: " + points);
-                        Button restart = (Button) findViewById(R.id.restart);
-                        Button quit = (Button) findViewById(R.id.quit);
-                        restart.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = getIntent();
-                                finish();
-                                startActivity(intent);
-                            }
-                        });
-                        quit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                        gameOver.setVisibility(View.VISIBLE);
                         currentLayout.removeView(randomImage);
-                        lHandler.removeMessages(0);
-                        lHandler.removeMessages(1);
-                        rHandler.removeMessages(2);
-                        rHandler.removeMessages(3);
+                        endGame();
                     }
                 }
 
@@ -349,39 +322,10 @@ public class SingleModeActivity extends AppCompatActivity {
                         if (exempt_val==0){
                             exempt_on = false;
                         }
-
                     }
-
                     else {
-                        gameEnd = true;
-                        RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
-                        leftHalf.setOnClickListener(null);
-                        LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
-                        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
-                        gameOverText.setText("Points: " + points);
-                        Button restart = (Button) findViewById(R.id.restart);
-                        Button quit = (Button) findViewById(R.id.quit);
-                        restart.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = getIntent();
-                                finish();
-                                startActivity(intent);
-                            }
-                        });
-                        quit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                        gameOver.setVisibility(View.VISIBLE);
                         currentLayout.removeView(randomImage);
-                        lHandler.removeMessages(0);
-                        lHandler.removeMessages(1);
-                        rHandler.removeMessages(2);
-                        rHandler.removeMessages(3);
+                        endGame();
                     }
 
                 }
@@ -403,5 +347,41 @@ public class SingleModeActivity extends AppCompatActivity {
         if (musicOn) mPlayer.stop();
 //        mServ.stopMusic();
 //        doUnbindService();
+    }
+
+    private void endGame() {
+        gameEnd = true;
+        RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
+        rightHalf.setOnClickListener(null);
+        RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
+        leftHalf.setOnClickListener(null);
+        LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
+        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
+        gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 4) );
+        Button restart = (Button) findViewById(R.id.restart);
+        Button quit = (Button) findViewById(R.id.quit);
+        restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+        quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
+                startActivity(intent);
+            }
+        });
+        gameOver.setVisibility(View.VISIBLE);
+
+        int coins = sharedPref.getInt("coins", 0 );
+        editor.putInt("coins",coins + points / 10);
+        lHandler.removeMessages(0);
+        lHandler.removeMessages(1);
+        rHandler.removeMessages(2);
+        rHandler.removeMessages(3);
     }
 }

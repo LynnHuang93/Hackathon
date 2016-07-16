@@ -40,7 +40,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 musicOn = !musicOn;
                 editor.putBoolean("musicOn", musicOn);
-                switchSound.setChecked(musicOn);
+                switchMusic.setChecked(musicOn);
                 editor.commit();
             }
         });
