@@ -4,13 +4,17 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+<<<<<<< HEAD
 import android.net.Uri;
+=======
+import android.media.SoundPool;
+>>>>>>> 16fd7fbf5f23f52b2d7e6ff9fb22367f45f75104
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -22,12 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.media.SoundPool;
-import android.media.SoundPool.OnLoadCompleteListener;
-import android.media.AudioManager;
-import android.media.AudioAttributes;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -76,6 +74,9 @@ public class SingleModeActivity extends AppCompatActivity {
     Context context = this;
     Boolean soundOn;
     Boolean musicOn;
+    int pearlsnum;
+
+    TextView pearlsnumview;
 
     private MediaPlayer mPlayer;
 
@@ -97,9 +98,17 @@ public class SingleModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
 
+<<<<<<< HEAD
         sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+=======
+        pearlsnumview = (TextView)findViewById(R.id.mypearls);
+
+        sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
+>>>>>>> 16fd7fbf5f23f52b2d7e6ff9fb22367f45f75104
         soundOn = sharedPref.getBoolean("soundOn", true);
         musicOn = sharedPref.getBoolean("musicOn", true);
+        pearlsnum = sharedPref.getInt("pearls", 0);
+        pearlsnumview.setText(pearlsnum);
         editor = sharedPref.edit();
         mPlayer = MediaPlayer.create(this, R.raw.music1);
         if (mPlayer != null) {
@@ -179,6 +188,7 @@ public class SingleModeActivity extends AppCompatActivity {
                 leftNext = tmp;
             }
         });
+<<<<<<< HEAD
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -202,6 +212,20 @@ public class SingleModeActivity extends AppCompatActivity {
                 Uri.parse("android-app://com.weareonfire.gocha.gocha/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
+=======
+
+        final ImageView pearls = (ImageView) findViewById(R.id.pearls);
+        pearls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pearlsnum > 0){
+                    exempt_val += 1;
+                    pearlsnum --;
+                    pearlsnumview.setText(pearlsnum);
+                }
+            }
+        });
+>>>>>>> 16fd7fbf5f23f52b2d7e6ff9fb22367f45f75104
     }
 
     private class rightHandlerCallBack implements Handler.Callback {
@@ -225,6 +249,7 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             layoutParams.setMargins(0, -randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
+<<<<<<< HEAD
             currentLayout.addView(randomImage, layoutParams);
             LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
             parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
@@ -232,10 +257,16 @@ public class SingleModeActivity extends AppCompatActivity {
             randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             final Integer imageheight = randomImage.getMeasuredHeight();
             Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, -0.5f, Animation.RELATIVE_TO_PARENT, 0.45f);
+=======
+            currentLayout.addView(randomImage,layoutParams);
+
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.45f);
+
+>>>>>>> 16fd7fbf5f23f52b2d7e6ff9fb22367f45f75104
             //Animation animation = new TranslateAnimation(0, 0, -500, 900);
 
             animation.setInterpolator(new LinearInterpolator());
-            animation.setDuration(4000);
+            animation.setDuration(6000);
             animation.setFillAfter(false);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -256,7 +287,7 @@ public class SingleModeActivity extends AppCompatActivity {
                                 if (!exempt_on) {
                                     exempt_on = true;
                                 }
-                                exempt_val += 2;
+                                exempt_val += 1;
                                 TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                                 exempt.setText(Integer.toString(exempt_val));
 
@@ -300,6 +331,7 @@ public class SingleModeActivity extends AppCompatActivity {
                     } else {
                         currentLayout.removeView(randomImage);
                         endGame();
+
                     }
                 }
 
@@ -334,18 +366,24 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             layoutParams.setMargins(0, -randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
+<<<<<<< HEAD
             currentLayout.addView(randomImage, layoutParams);
             LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
 //            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             int totalheight = currentLayout.getHeight();
             int totalwidth = currentLayout.getWidth();
+=======
+            currentLayout.addView(randomImage,layoutParams);
+
+>>>>>>> 16fd7fbf5f23f52b2d7e6ff9fb22367f45f75104
 //            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
 //            final int imageheight = randomImage.getMeasuredHeight();
             Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, -0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
 
 
+
             animation.setInterpolator(new LinearInterpolator());
-            animation.setDuration(4000);
+            animation.setDuration(6000);
             animation.setFillAfter(false);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -370,7 +408,7 @@ public class SingleModeActivity extends AppCompatActivity {
                                 if (!exempt_on) {
                                     exempt_on = true;
                                 }
-                                exempt_val += 2;
+                                exempt_val += 1;
                                 TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                                 exempt.setText(Integer.toString(exempt_val));
 
@@ -411,6 +449,7 @@ public class SingleModeActivity extends AppCompatActivity {
                     } else {
                         currentLayout.removeView(randomImage);
                         endGame();
+
                     }
 
                 }
@@ -451,7 +490,46 @@ public class SingleModeActivity extends AppCompatActivity {
     }
 
     private void endGame() {
+        if (!gameEnd){
+
+            RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
+            rightHalf.setOnClickListener(null);
+            RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
+            leftHalf.setOnClickListener(null);
+            LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
+            TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
+            gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 10) );
+            Button restart = (Button) findViewById(R.id.restart);
+            Button quit = (Button) findViewById(R.id.quit);
+            restart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
+            quit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
+                    startActivity(intent);
+                }
+            });
+            gameOver.setVisibility(View.VISIBLE);
+            int coins = sharedPref.getInt("coins", 0 );
+            editor.putInt("coins",coins + points / 10);
+            editor.commit();
+
+            //coins = sharedPref.getInt("coins",0);
+            //Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
+            lHandler.removeMessages(0);
+            lHandler.removeMessages(1);
+            rHandler.removeMessages(2);
+            rHandler.removeMessages(3);}
+
         gameEnd = true;
+<<<<<<< HEAD
         RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
         rightHalf.setOnClickListener(null);
         RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
@@ -487,4 +565,8 @@ public class SingleModeActivity extends AppCompatActivity {
         rHandler.removeMessages(2);
         rHandler.removeMessages(3);
     }
+=======
+
+    };
+>>>>>>> 16fd7fbf5f23f52b2d7e6ff9fb22367f45f75104
 }

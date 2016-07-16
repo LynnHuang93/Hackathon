@@ -118,8 +118,8 @@ public class HardModeActivity extends AppCompatActivity {
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
-                RelativeLayout rightNextView = (RelativeLayout)findViewById(leftNext);
-                rightNextView.addView(randomImage, layoutParams);
+                RelativeLayout leftNextView = (RelativeLayout)findViewById(leftNext);
+                leftNextView.addView(randomImage, layoutParams);
                 int tmp = leftCurrent;
                 leftCurrent = leftNext;
                 leftNext = tmp;
@@ -314,7 +314,7 @@ public class HardModeActivity extends AppCompatActivity {
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
-                                exempt_val += 2;
+                                exempt_val += 1;
                                 TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                                 exempt.setText(Integer.toString(exempt_val));
 

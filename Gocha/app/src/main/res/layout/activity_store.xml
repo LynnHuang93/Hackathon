@@ -130,7 +130,7 @@
                         android:id="@+id/octDes"
                         android:layout_margin="1dp"
                         android:textColor="@color/White"
-                        android:text="Put a shade on the screen"
+                        android:text="Put a shade on the screen (5 coins)"
                         android:layout_gravity="bottom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -176,6 +176,7 @@
             android:id="@+id/moneyicon"
             android:layout_width="50dp"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
             android:src="@drawable/ic_monetization_on_white_24dp"
             android:layout_height="wrap_content" />
         <TextView
@@ -185,6 +186,7 @@
             android:text="0"
             android:textColor="@color/White"
             android:textSize="60dp"
+            android:layout_marginLeft="3dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/moneyicon"
@@ -196,6 +198,7 @@
             android:text="BUY"
             android:textColor="@color/White"
             android:textSize="24dp"
+            android:layout_marginRight="15dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
