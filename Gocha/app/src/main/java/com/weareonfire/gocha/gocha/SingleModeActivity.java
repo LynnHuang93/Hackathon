@@ -215,7 +215,7 @@ public class SingleModeActivity extends AppCompatActivity {
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
-                                exempt_val += 2;
+                                exempt_val += 1;
                                 TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                                 exempt.setText(Integer.toString(exempt_val));
 
@@ -330,7 +330,7 @@ public class SingleModeActivity extends AppCompatActivity {
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
-                                exempt_val += 2;
+                                exempt_val += 1;
                                 TextView exempt = (TextView) findViewById(R.id.ExemptNum);
                                 exempt.setText(Integer.toString(exempt_val));
 
