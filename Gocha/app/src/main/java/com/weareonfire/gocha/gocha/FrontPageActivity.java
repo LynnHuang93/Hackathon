@@ -1,7 +1,9 @@
 package com.weareonfire.gocha.gocha;
 
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 public class FrontPageActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +55,32 @@ public class FrontPageActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                Intent toLoginActivityIntent = new Intent(FrontPageActivity.this, LoginActivity.class);
-                startActivity(toLoginActivityIntent);
+//                Intent toLoginActivityIntent = new Intent(FrontPageActivity.this, LoginActivity.class);
+//                startActivity(toLoginActivityIntent);
+                FloatingActionButton store = (FloatingActionButton)findViewById(R.id.store);
+                FloatingActionButton setting = (FloatingActionButton)findViewById(R.id.setting);
+                if (store.getVisibility() == View.GONE) {
+                    setting.setVisibility(View.VISIBLE);
+                    store.setVisibility(View.VISIBLE);
+                    setting.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(FrontPageActivity.this, SettingActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    store.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(FrontPageActivity.this, StoreActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                } else {
+                    setting.setVisibility(View.GONE);
+                    store.setVisibility(View.GONE);
+                }
+
             }
         });
     }

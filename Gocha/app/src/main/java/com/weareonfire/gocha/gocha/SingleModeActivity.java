@@ -368,6 +368,7 @@ public class SingleModeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
+        mServ.stopMusic();
         doUnbindService();
     }
 }
