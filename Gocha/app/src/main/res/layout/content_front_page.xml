@@ -83,4 +83,14 @@
         android:visibility="gone"
         android:src="@drawable/ic_settings_white_24dp" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/hints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/setting"
+        android:layout_toLeftOf="@+id/store"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        android:src="@drawable/ic_info_outline_white_24dp" />
+
 </RelativeLayout>

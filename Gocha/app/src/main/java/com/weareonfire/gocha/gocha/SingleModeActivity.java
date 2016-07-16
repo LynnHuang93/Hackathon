@@ -90,7 +90,7 @@ public class SingleModeActivity extends AppCompatActivity {
         soundOn = sharedPref.getBoolean("soundOn", true);
         musicOn = sharedPref.getBoolean("musicOn", true);
         pearlsnum = sharedPref.getInt("pearls", 0);
-        pearlsnumview.setText(pearlsnum);
+        pearlsnumview.setText(Integer.toString(pearlsnum));
         editor = sharedPref.edit();
         mPlayer = MediaPlayer.create(this, R.raw.music1);
         if (mPlayer != null) {
@@ -178,7 +178,9 @@ public class SingleModeActivity extends AppCompatActivity {
                 if (pearlsnum > 0){
                     exempt_val += 1;
                     pearlsnum --;
-                    pearlsnumview.setText(pearlsnum);
+                    pearlsnumview.setText(Integer.toString(pearlsnum));
+                    TextView exemptnumview = (TextView) findViewById(R.id.ExemptNum);
+                    exemptnumview.setText(Integer.toString(exempt_val));
                 }
             }
         });
@@ -453,7 +455,6 @@ public class SingleModeActivity extends AppCompatActivity {
         lHandler.removeMessages(1);
         rHandler.removeMessages(2);
         rHandler.removeMessages(3);
-
 
     }
 }

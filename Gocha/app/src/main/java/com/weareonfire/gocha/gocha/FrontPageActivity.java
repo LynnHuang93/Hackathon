@@ -50,9 +50,11 @@ public class FrontPageActivity extends AppCompatActivity {
 //                startActivity(toLoginActivityIntent);
                 FloatingActionButton store = (FloatingActionButton)findViewById(R.id.store);
                 FloatingActionButton setting = (FloatingActionButton)findViewById(R.id.setting);
+                FloatingActionButton info = (FloatingActionButton) findViewById(R.id.hints);
                 if (store.getVisibility() == View.GONE) {
                     setting.setVisibility(View.VISIBLE);
                     store.setVisibility(View.VISIBLE);
+                    info.setVisibility(View.VISIBLE);
                     setting.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -67,9 +69,17 @@ public class FrontPageActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
+                    info.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(FrontPageActivity.this, InfoActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 } else {
                     setting.setVisibility(View.GONE);
                     store.setVisibility(View.GONE);
+                    info.setVisibility(View.GONE);
                 }
 
             }
