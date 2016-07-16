@@ -151,14 +151,6 @@ public class SingleModeActivity extends AppCompatActivity {
         });
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
-        lHandler.removeMessages(0);
-        lHandler.removeMessages(1);
-        rHandler.removeMessages(2);
-        rHandler.removeMessages(3);
-        return super.onTouchEvent(event);
-    }
-
     private class rightHandlerCallBack implements Handler.Callback {
         public boolean handleMessage(Message m) {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
@@ -428,5 +420,11 @@ public class SingleModeActivity extends AppCompatActivity {
             lHandler.sendEmptyMessageDelayed(random.nextInt(2), time_gap-200+random.nextInt(400));
             return true;
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        doUnbindService();
     }
 }
