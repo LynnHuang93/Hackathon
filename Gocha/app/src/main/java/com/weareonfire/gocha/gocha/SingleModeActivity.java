@@ -150,8 +150,13 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-
-            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
+            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            int totalheight = parent.getMeasuredHeight();
+            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            final Integer imageheight = randomImage.getMeasuredHeight();
+            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
+            //Animation animation = new TranslateAnimation(0, 0, -500, 900);
 
             animation.setInterpolator(new LinearInterpolator());
             animation.setDuration(4000);
@@ -257,8 +262,12 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-
-            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
+            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            int totalheight = parent.getMeasuredHeight();
+            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            final Integer imageheight = randomImage.getMeasuredHeight();
+            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
 
 
             animation.setInterpolator(new LinearInterpolator());
@@ -356,7 +365,7 @@ public class SingleModeActivity extends AppCompatActivity {
         leftHalf.setOnClickListener(null);
         LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
         TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
-        gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 4) );
+        gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 10) );
         Button restart = (Button) findViewById(R.id.restart);
         Button quit = (Button) findViewById(R.id.quit);
         restart.setOnClickListener(new View.OnClickListener() {
@@ -378,6 +387,8 @@ public class SingleModeActivity extends AppCompatActivity {
 
         int coins = sharedPref.getInt("coins", 0 );
         editor.putInt("coins",coins + points / 10);
+        coins = sharedPref.getInt("coins",0);
+        //Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
         lHandler.removeMessages(0);
         lHandler.removeMessages(1);
         rHandler.removeMessages(2);
