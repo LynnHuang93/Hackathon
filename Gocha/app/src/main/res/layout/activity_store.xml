@@ -22,24 +22,39 @@
             <ImageView
                 android:id="@+id/exampt"
                 android:layout_width="0dp"
-                android:src="@drawable/ic_local_grocery_store_white_24dp"
-                android:layout_height="match_parent"
+                android:src="@drawable/pearlexempt"
+                android:layout_height="95dp"
                 android:layout_weight=".30"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight=".30">
-                <TextView
-                    android:text="Pearl"
-                    android:textColor="@color/White"
-                    android:id="@+id/examptName"
-                    android:layout_margin="5dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_width="match_parent"
-                    android:layout_gravity="top"
-                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="Pearl  ×"
+                        android:textColor="@color/White"
+                        android:id="@+id/examptName"
+                        android:layout_margin="5dp"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:text="0"
+                        android:textColor="@color/White"
+                        android:id="@+id/examptRestNum"
+                        android:layout_margin="5dp"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
                 <TextView
                     android:text="Exampt you from 2 miss"
                     android:textColor="@color/White"
@@ -83,25 +98,40 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/oct"
-                    android:src="@drawable/ic_settings_white_24dp"
+                    android:src="@drawable/octopus"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="95dp"
                     android:layout_weight=".30"/>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_weight=".30">
-                    <TextView
-                        android:id="@+id/octName"
-                        android:layout_margin="5dp"
-                        android:textColor="@color/White"
-                        android:text="Octopus"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="top"
-                        android:layout_height="wrap_content" />
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/octName"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/White"
+                            android:text="Octopus  x"
+                            android:textStyle="bold"
+                            android:textSize="17sp"
+                            android:layout_width="match_parent"
+                            android:layout_gravity="top"
+                            android:layout_height="wrap_content" />
+                       <TextView
+                           android:id="@+id/octRestNum"
+                           android:layout_margin="5dp"
+                           android:textColor="@color/White"
+                           android:text="0"
+                           android:textStyle="bold"
+                           android:textSize="17sp"
+                           android:layout_width="match_parent"
+                           android:layout_gravity="top"
+                           android:layout_height="wrap_content" />
+                   </LinearLayout>
                     <TextView
                         android:id="@+id/octDes"
                         android:layout_margin="5dp"
