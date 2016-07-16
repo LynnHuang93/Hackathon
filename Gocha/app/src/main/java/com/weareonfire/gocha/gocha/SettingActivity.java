@@ -17,7 +17,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        final SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        final SharedPreferences sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
         soundOn = sharedPref.getBoolean("soundOn", true);
         musicOn = sharedPref.getBoolean("musicOn", true);
         final Switch switchSound = (Switch) findViewById(R.id.soundOn);
@@ -38,7 +38,7 @@ public class SettingActivity extends AppCompatActivity {
         switchMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                musicOn = ! musicOn;
+                musicOn = !musicOn;
                 editor.putBoolean("musicOn", musicOn);
                 switchSound.setChecked(musicOn);
                 editor.commit();

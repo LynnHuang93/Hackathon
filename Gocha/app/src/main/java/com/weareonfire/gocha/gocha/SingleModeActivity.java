@@ -1,6 +1,8 @@
 package com.weareonfire.gocha.gocha;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,57 +48,27 @@ public class SingleModeActivity extends AppCompatActivity {
     private int exempt_val = 0;
     //private boolean reverse = false;
 
+    Context context = this;
+    Boolean soundOn;
+    Boolean musicOn;
+
     private MediaPlayer mPlayer;
-    //--music
-//    private boolean mIsBound = false;
-//    private MusicService mServ;
-//    private ServiceConnection Scon =new ServiceConnection(){
-//
-//        public void onServiceConnected(ComponentName name, IBinder
-//                binder) {
-//            mServ = ((MusicService.ServiceBinder)binder).getService();
-//        }
-//
-//        public void onServiceDisconnected(ComponentName name) {
-//            mServ = null;
-//        }
-//    };
-
-//    void doBindService(){
-//        bindService(new Intent(this,MusicService.class),
-//                Scon, Context.BIND_AUTO_CREATE);
-//        mIsBound = true;
-//    }
-//
-//    void doUnbindService()
-//    {
-//        if(mIsBound)
-//        {
-//            unbindService(Scon);
-//            mIsBound = false;
-//        }
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
 
-        //Intent intentstream = getIntent();
-        //reverse =intentstream.getBooleanExtra("reverse",false);
+        final SharedPreferences sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
+        soundOn = sharedPref.getBoolean("soundOn", true);
+        musicOn = sharedPref.getBoolean("musicOn", true);
 
-        //doBindService();
-
-        //Intent music = new Intent();
-        //music.setClass(this,MusicService.class);
-        //startService(music);
         mPlayer = MediaPlayer.create(this, R.raw.music1);
         if (mPlayer != null) {
             mPlayer.setLooping(true);
             mPlayer.setVolume(100, 100);
         }
-        mPlayer.start();
+        if (musicOn) mPlayer.start();
 
         tracks.add ((RelativeLayout) findViewById(R.id.leftout));
         tracks.add ((RelativeLayout) findViewById(R.id.leftin));
@@ -428,7 +400,7 @@ public class SingleModeActivity extends AppCompatActivity {
     @Override
     protected void onStop(){
         super.onStop();
-        mPlayer.stop();
+        if (musicOn) mPlayer.stop();
 //        mServ.stopMusic();
 //        doUnbindService();
     }
