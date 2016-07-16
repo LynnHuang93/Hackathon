@@ -195,10 +195,10 @@ public class SingleModeActivity extends AppCompatActivity {
             currentLayout.addView(randomImage,layoutParams);
             LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
             parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            int totalheight = parent.getMeasuredHeight();
+            int totalheight = currentLayout.getMeasuredHeight();
             randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.45f);
             //Animation animation = new TranslateAnimation(0, 0, -500, 900);
 
             animation.setInterpolator(new LinearInterpolator());
@@ -306,11 +306,12 @@ public class SingleModeActivity extends AppCompatActivity {
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
             LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
-            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            int totalheight = parent.getMeasuredHeight();
-            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
+//            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            int totalheight = currentLayout.getHeight();
+            int totalwidth = currentLayout.getWidth();
+//            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//            final int imageheight = randomImage.getMeasuredHeight();
+            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, 0,Animation.RELATIVE_TO_PARENT, - 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
 
 
             animation.setInterpolator(new LinearInterpolator());
