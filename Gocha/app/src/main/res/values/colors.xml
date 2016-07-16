@@ -9,6 +9,9 @@
     <color name="backGround">#A0D8EF</color>
     <color name="button">#6BC8F2</color>
     <color name="White">#FFFFFF</color>
+    <color name="GameOver">#FCFBF4</color>
+    <color name="finishbutton">#f4b4b0</color>
+
 </resources>
 
 

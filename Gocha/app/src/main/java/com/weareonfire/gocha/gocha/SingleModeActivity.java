@@ -142,7 +142,7 @@ public class SingleModeActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 ImageView randomImage = new ImageView(SingleModeActivity.this);
-                randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
+                randomImage.setImageResource(R.drawable.ic_pets_black_24dp);
                 RelativeLayout rightCurrentView = (RelativeLayout)findViewById(rightCurrent);
                 rightCurrentView.removeAllViews();
                 RelativeLayout rightNextView = (RelativeLayout)findViewById(rightNext);
@@ -159,7 +159,7 @@ public class SingleModeActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 ImageView randomImage = new ImageView(SingleModeActivity.this);
-                randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
+                randomImage.setImageResource(R.drawable.ic_pets_black_24dp);
                 RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
                 RelativeLayout leftNextView = (RelativeLayout)findViewById(leftNext);
