@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -19,6 +20,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.media.SoundPool;
+import android.media.SoundPool.OnLoadCompleteListener;
+import android.media.AudioManager;
+import android.media.AudioAttributes;
+import android.os.Build;
+import android.os.Build.VERSION_CODES;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,11 +57,28 @@ public class SingleModeActivity extends AppCompatActivity {
     private int exempt_val = 0;
     //private boolean reverse = false;
 
+    //-- sound effect
+    // private SoundPool soundPool;
+    private int soundID_Coin;
+    private int soundID_Bomb;
+    private int soundID_Bubbles;
+    private int soundID_Absorption;
+
+    boolean loaded = false;
+
     Context context = this;
     Boolean soundOn;
     Boolean musicOn;
 
     private MediaPlayer mPlayer;
+
+    // initilzie soundpool and set to the max volume
+    AudioAttributes attributes = new AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build();
+
+    private SoundPool soundPool = new SoundPool.Builder().setAudioAttributes(attributes).build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +115,25 @@ public class SingleModeActivity extends AppCompatActivity {
         RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
         RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
 
+//        // Set the hardware buttons to control the music
+//        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+//        // Load the sound
+//        soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
+//            @Override
+//            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+//                loaded = true;
+//            }
+//        });
+//        soundID_Coin = soundPool.load(this, R.raw.coin, 1);
+//        soundID_Absorption = soundPool.load(this, R.raw.absorption, 1);
+//        soundID_Bomb = soundPool.load(this, R.raw.bomb, 1);
+//        soundID_Bubbles = soundPool.load(this, R.raw.bubbles, 1);
+//        // Getting the user sound settings
+//        AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+//        float actualVolume = (float) audioManager
+//                .getStreamVolume(AudioManager.STREAM_MUSIC);
+//        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+
         rightHalf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,8 +160,8 @@ public class SingleModeActivity extends AppCompatActivity {
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
-                RelativeLayout rightNextView = (RelativeLayout)findViewById(leftNext);
-                rightNextView.addView(randomImage, layoutParams);
+                RelativeLayout leftNextView = (RelativeLayout)findViewById(leftNext);
+                leftNextView.addView(randomImage, layoutParams);
                 int tmp = leftCurrent;
                 leftCurrent = leftNext;
                 leftNext = tmp;
@@ -281,6 +324,10 @@ public class SingleModeActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
+//                    if (loaded) {
+//                        soundPool.play(soundID_Bomb, 1, 1, 1, 0, 1f);
+//                        Log.e("Test", "Played sound");
+//                    }
                     if (currentLayout.getId() == leftCurrent) {
                         if (!gameEnd){
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
