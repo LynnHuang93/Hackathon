@@ -26,10 +26,11 @@ public class SingleModeActivity extends AppCompatActivity {
     Random random = new Random();
     private int duration = 2000;
     private int time_gap = 600;
-    //private ImageView rightCurrent = (ImageView) findViewById(R.id.rightoutimage);
-    //private ImageView leftCurrent = (ImageView) findViewById(R.id.leftoutimage);
-    //private ImageView rightNext = (ImageView) findViewById(R.id.rightinimage);
-    //private ImageView leftNext = (ImageView)findViewById(R.id.leftinimage);
+
+    private ImageView rightCurrent;// = (ImageView) findViewById(R.id.rightoutimage);
+    private ImageView leftCurrent;// = (ImageView) findViewById(R.id.leftoutimage);
+    private ImageView rightNext;// = (ImageView) findViewById(R.id.rightinimage);
+    private ImageView leftNext;// = (ImageView)findViewById(R.id.leftinimage);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +52,42 @@ public class SingleModeActivity extends AppCompatActivity {
         RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
         RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
 
-//        rightHalf.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                rightCurrent.setImageResource(R.id);
-//            }
-//        });
+        rightHalf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView randomImage = new ImageView(SingleModeActivity.this);
+                randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
+                RelativeLayout rightCurrentView = (RelativeLayout)findViewById(rightCurrent);
+                rightCurrentView.removeAllViews();
+                RelativeLayout rightNextView = (RelativeLayout)findViewById(rightNext);
+                rightNextView.addView(randomImage);
+                int tmp = rightCurrent;
+                rightCurrent = rightNext;
+                rightNext = tmp;
+            }
+        });
+
+        leftHalf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView randomImage = new ImageView(SingleModeActivity.this);
+                randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
+                RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
+                leftCurrentView.removeAllViews();
+                RelativeLayout rightNextView = (RelativeLayout)findViewById(leftNext);
+                rightNextView.addView(randomImage);
+                int tmp = leftCurrent;
+                leftCurrent = leftNext;
+                leftNext = tmp;
+            }
+        });
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-            lHandler.removeMessages(0);
-            lHandler.removeMessages(1);
-            rHandler.removeMessages(2);
-            rHandler.removeMessages(3);
+        lHandler.removeMessages(0);
+        lHandler.removeMessages(1);
+        rHandler.removeMessages(2);
+        rHandler.removeMessages(3);
         return super.onTouchEvent(event);
     }
 
