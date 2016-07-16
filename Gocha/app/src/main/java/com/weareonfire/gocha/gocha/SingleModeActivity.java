@@ -157,15 +157,18 @@ public class SingleModeActivity extends AppCompatActivity {
     }
 
     private class rightHandlerCallBack implements Handler.Callback {
+        private int currentImgId;
         public boolean handleMessage(Message m) {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
             float randf = random.nextFloat();
             if (randf<=0.8){
-                randomImage.setImageResource(generic_images.get(random.nextInt(3)));
+                currentImgId = generic_images.get(random.nextInt(3));
+                randomImage.setImageResource(currentImgId);
 
             }
             else{
-                randomImage.setImageResource(exempt_images.get(random.nextInt(2)));
+                currentImgId = exempt_images.get(random.nextInt(2));
+                randomImage.setImageResource(currentImgId);
             }
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
@@ -188,12 +191,16 @@ public class SingleModeActivity extends AppCompatActivity {
                 public void onAnimationEnd(Animation animation) {
                     if (currentLayout.getId() == rightCurrent ^ reverse) {
                         if (!gameEnd){
+//                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
+//                                    Toast.LENGTH_SHORT).show();
                             points += 1;
-                            if (exempt_images_set.contains(randomImage.getId())){ //current image in exempt set
+                            if (exempt_images_set.contains(currentImgId)){ //current image in exempt set
+//                                Toast.makeText(getApplicationContext(), "found an exempt image",
+//                                        Toast.LENGTH_SHORT).show();
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
-                                exempt_val += 3;
+                                exempt_val += 2;
 
                             }
 
@@ -259,14 +266,17 @@ public class SingleModeActivity extends AppCompatActivity {
     }
 
     private class leftHandlerCallBack implements Handler.Callback {
+        private int currentImgId;
         public boolean handleMessage(Message m) {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
             float randf = random.nextFloat();
             if (randf<=0.8){ //control the prob for different imgs
-                randomImage.setImageResource(generic_images.get(random.nextInt(3)));
+                currentImgId = generic_images.get(random.nextInt(3));
+                randomImage.setImageResource(currentImgId);
             }
             else{
-                randomImage.setImageResource(exempt_images.get(random.nextInt(2)));
+                currentImgId = exempt_images.get(random.nextInt(2));
+                randomImage.setImageResource(currentImgId);
             }
             //randomImage.setImageResource(generic_images.get(random.nextInt(3)));
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -292,11 +302,15 @@ public class SingleModeActivity extends AppCompatActivity {
                     if (currentLayout.getId() == leftCurrent) {
                         if (!gameEnd){
                             points += 1;
-                            if (exempt_images_set.contains(randomImage.getId())){ //current image in exempt set
+//                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
+//                                    Toast.LENGTH_SHORT).show();
+                            if (exempt_images_set.contains(currentImgId)){ //current image in exempt set
+//                                Toast.makeText(getApplicationContext(), "found an exempt Img",
+//                                        Toast.LENGTH_SHORT).show();
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
-                                exempt_val += 3;
+                                exempt_val += 2;
 
                             }
                             TextView score = (TextView) findViewById(R.id.ScoreNum);
