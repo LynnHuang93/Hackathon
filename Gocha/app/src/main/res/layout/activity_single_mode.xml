@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/backGround"
+    android:background="@drawable/bubbles"
     android:id="@+id/outmost_layout"
     tools:context="com.weareonfire.gocha.gocha.SingleModeActivity">
 
@@ -19,10 +19,9 @@
             android:layout_weight=".11">
             <TextView
                 android:id="@+id/ScoreText"
-                android:text="Score:"
+                android:text="Score: "
                 android:layout_marginTop="@dimen/score_mergin"
                 android:layout_marginLeft="@dimen/score_mergin"
-                android:layout_marginRight="@dimen/score_mergin"
                 android:layout_gravity="top|start"
                 android:textColor="@color/White"
                 android:textSize="@dimen/score_text_size"
@@ -39,10 +38,9 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/ExemptText"
-                android:text="Exempt:"
+                android:text="Exempt: "
                 android:layout_marginTop="@dimen/score_mergin"
                 android:layout_marginLeft="@dimen/score_mergin"
-                android:layout_marginRight="@dimen/score_mergin"
                 android:layout_toRightOf="@id/ScoreNum"
                 android:layout_gravity="top|start"
                 android:textColor="@color/White"
@@ -60,6 +58,7 @@
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/pearls"
+                android:layout_marginTop="@dimen/score_mergin"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_toLeftOf="@+id/mypearls"
@@ -68,13 +67,17 @@
                 android:id="@+id/mypearls"
                 android:text="0"
                 android:layout_marginTop="@dimen/score_mergin"
-                android:layout_toLeftOf="@+id/anopts"
+
+                android:layout_alignParentRight="true"
                 android:textColor="@color/White"
                 android:textSize="@dimen/score_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <!--android:layout_toLeftOf="@+id/anopts"-->
+            <!--
             <ImageView
                 android:id="@+id/anopts"
+                android:layout_marginTop="@dimen/score_mergin"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_toLeftOf="@+id/myocts"
@@ -88,107 +91,91 @@
                 android:textSize="@dimen/score_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+                -->
         </RelativeLayout>
 
 
         <!--Main game part -->
-
         <RelativeLayout
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/score_mergin"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".89"
-            android:background="@color/button">
-                <LinearLayout
-                    android:layout_width="match_parent"
+            android:layout_weight=".89">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <RelativeLayout
-                        android:layout_width="0dp"
+                    android:id="@+id/lefthalf"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/lefthalf"
-                        android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="horizontal">
+                        <RelativeLayout
+                            android:id="@+id/leftout"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
-                            <RelativeLayout
-                                android:id="@+id/leftout"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentBottom="true"
-                                    android:src="@drawable/ic_record_voice_over_black_24dp"/>
-                            </RelativeLayout>
-                            <RelativeLayout
-                                android:id="@+id/leftin"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                            </RelativeLayout>
-                        </LinearLayout>
-                        <View
-                            android:layout_width="1dp"
+                            android:layout_weight="1">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:src="@drawable/ic_record_voice_over_black_24dp"/>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/leftin"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:background="@android:color/white" />
+                            android:layout_weight="1">
+                        </RelativeLayout>
+                    </LinearLayout>
 
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="0dp"
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/righthalf"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/righthalf"
-                        android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="horizontal">
+                        <RelativeLayout
+                            android:id="@+id/rightin"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:layout_weight="1">
                             <RelativeLayout
-                                android:id="@+id/rightin"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                                <RelativeLayout
-                                    android:layout_alignParentBottom="true"
-                                    android:id="@+id/rightinimage"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                            </RelativeLayout>
-                            <RelativeLayout
-                                android:id="@+id/rightout"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentBottom="true"
-                                    android:src="@drawable/ic_record_voice_over_black_24dp"/>
-                            </RelativeLayout>
-                        </LinearLayout>
-                        <View
-                            android:layout_width="1dp"
+                                android:layout_alignParentBottom="true"
+                                android:id="@+id/rightinimage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/rightout"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:background="@android:color/white" />
-                    </RelativeLayout>
-                </LinearLayout>
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:background="@android:color/white" />
-                <ImageView
-                    android:layout_marginTop="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ink"
-                    android:id="@+id/ink"
-                    android:visibility="invisible"/>
+                            android:layout_weight="1">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:src="@drawable/ic_record_voice_over_black_24dp"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+            <ImageView
+                android:layout_marginTop="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ink"
+                android:id="@+id/ink"
+                android:visibility="invisible"/>
         </RelativeLayout>
 
     </LinearLayout>

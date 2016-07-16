@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -282,6 +281,7 @@ public class SingleModeActivity extends AppCompatActivity {
                     else {
                         currentLayout.removeView(randomImage);
                         endGame();
+
                     }
                 }
 
@@ -394,6 +394,7 @@ public class SingleModeActivity extends AppCompatActivity {
                     else {
                         currentLayout.removeView(randomImage);
                         endGame();
+
                     }
 
                 }
@@ -418,43 +419,44 @@ public class SingleModeActivity extends AppCompatActivity {
     }
 
     private void endGame() {
+        if (!gameEnd){
+
+            RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
+            rightHalf.setOnClickListener(null);
+            RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
+            leftHalf.setOnClickListener(null);
+            LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
+            TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
+            gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 10) );
+            Button restart = (Button) findViewById(R.id.restart);
+            Button quit = (Button) findViewById(R.id.quit);
+            restart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
+            quit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
+                    startActivity(intent);
+                }
+            });
+            gameOver.setVisibility(View.VISIBLE);
+            int coins = sharedPref.getInt("coins", 0 );
+            editor.putInt("coins",coins + points / 10);
+            editor.commit();
+
+            //coins = sharedPref.getInt("coins",0);
+            //Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
+            lHandler.removeMessages(0);
+            lHandler.removeMessages(1);
+            rHandler.removeMessages(2);
+            rHandler.removeMessages(3);
+        }
         gameEnd = true;
-        RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
-        rightHalf.setOnClickListener(null);
-        RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
-        leftHalf.setOnClickListener(null);
-        LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
-        TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
-        gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 10) );
-        Button restart = (Button) findViewById(R.id.restart);
-        Button quit = (Button) findViewById(R.id.quit);
-        restart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
-            }
-        });
-        quit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
-                startActivity(intent);
-            }
-        });
-        gameOver.setVisibility(View.VISIBLE);
-
-        int coins = sharedPref.getInt("coins", 0 );
-        editor.putInt("coins",coins + points / 10);
-        editor.putInt("pearls", pearlsnum);
-        editor.commit();
-        coins = sharedPref.getInt("coins",0);
-        Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
-        lHandler.removeMessages(0);
-        lHandler.removeMessages(1);
-        rHandler.removeMessages(2);
-        rHandler.removeMessages(3);
-
     }
 }
