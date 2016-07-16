@@ -258,8 +258,12 @@ public class SingleModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-
-            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
+            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            int totalheight = parent.getMeasuredHeight();
+            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            final Integer imageheight = randomImage.getMeasuredHeight();
+            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
 
 
             animation.setInterpolator(new LinearInterpolator());
