@@ -4,6 +4,13 @@
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
+    <string name="instructions">For each mode, there are four invisible lanes where objects are moving down the screen. The player taps on the left half of the screen to switch between the left two lanes, and taps on the right half to switch between the right two lanes.\n
+
+    \nFor the Simple Mode, the player needs to catch the objects from both the left and right two lanes.\n
+
+    \nFor the Hard Mode, the player needs to catch the objects from the left two lanes but avoid the objects from the right two lanes.\n
+
+    \nIf the player fails to catch or avoid an object, the game will be over. One exception would be when the player has caught a pearl, which grants him/her exemption from one missed move.</string>>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
