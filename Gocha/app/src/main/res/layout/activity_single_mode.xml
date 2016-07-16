@@ -67,11 +67,14 @@
                 android:id="@+id/mypearls"
                 android:text="0"
                 android:layout_marginTop="@dimen/score_mergin"
-                android:layout_toLeftOf="@+id/anopts"
+
+                android:layout_alignParentRight="true"
                 android:textColor="@color/White"
                 android:textSize="@dimen/score_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <!--android:layout_toLeftOf="@+id/anopts"-->
+            <!--
             <ImageView
                 android:id="@+id/anopts"
                 android:layout_marginTop="@dimen/score_mergin"
@@ -88,6 +91,7 @@
                 android:textSize="@dimen/score_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+                -->
         </RelativeLayout>
 
 
