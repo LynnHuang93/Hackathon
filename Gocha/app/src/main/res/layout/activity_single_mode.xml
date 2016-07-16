@@ -109,6 +109,7 @@
                             android:layout_height="match_parent"
                             android:layout_centerHorizontal="true"
                             android:background="@android:color/white" />
+
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="0dp"

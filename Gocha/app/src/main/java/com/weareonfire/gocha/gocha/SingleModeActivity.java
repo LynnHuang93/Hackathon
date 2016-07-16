@@ -1,8 +1,12 @@
 package com.weareonfire.gocha.gocha;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -17,17 +21,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class SingleModeActivity extends AppCompatActivity {
     List<RelativeLayout> tracks = new ArrayList<>(4);
-    List<Integer> images = new ArrayList<>(3);
+    List<Integer> generic_images = new ArrayList<>(3);
+    List<Integer> exempt_images = new ArrayList<>(2);
+    Set<Integer> exempt_images_set = new HashSet<>();
     private Handler rHandler = new Handler(new rightHandlerCallBack());
     private Handler lHandler = new Handler(new leftHandlerCallBack());
     Random random = new Random();
-    private int duration = 2000;
-    private int time_gap = 600;
+    private int duration = 4000;
+    private int time_gap = 2000;
     private int rightCurrent = R.id.rightout;
     private int leftCurrent = R.id.leftout;
     private int rightNext = R.id.rightin;
@@ -35,22 +43,72 @@ public class SingleModeActivity extends AppCompatActivity {
     private boolean gameEnd = false;
     private int points = 0;
 
+    private boolean exempt_on = false;
+    private int exempt_val = 0;
+    private boolean reverse = false;
+
+
+    //--music
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
+
+        Intent intentstream = getIntent();
+        reverse =intentstream.getBooleanExtra("reverse",false);
+
+        doBindService();
+
+        Intent music = new Intent();
+        music.setClass(this,MusicService.class);
+        startService(music);
 
         tracks.add ((RelativeLayout) findViewById(R.id.leftout));
         tracks.add ((RelativeLayout) findViewById(R.id.leftin));
         tracks.add ((RelativeLayout) findViewById(R.id.rightin));
         tracks.add ((RelativeLayout) findViewById(R.id.rightout));
 
-        images.add(R.drawable.ic_grade_black_24dp);
-        images.add(R.drawable.ic_invert_colors_black_24dp);
-        images.add(R.drawable.ic_report_problem_black_24dp);
+        generic_images.add(R.drawable.ic_grade_black_24dp);
+        generic_images.add(R.drawable.ic_invert_colors_black_24dp);
+        generic_images.add(R.drawable.ic_report_problem_black_24dp);
+        exempt_images.add(R.drawable.ic_pregnant_woman_black_24dp);
+        exempt_images.add(R.drawable.ic_rowing_black_24dp);
 
-        rHandler.sendEmptyMessage(random.nextInt(4));
-        lHandler.sendEmptyMessage(random.nextInt(4));
+        exempt_images_set.addAll(exempt_images);
+
+
+        rHandler.sendEmptyMessage(random.nextInt(2)+2);
+        lHandler.sendEmptyMessage(random.nextInt(2));
 
         RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
         RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
@@ -99,15 +157,27 @@ public class SingleModeActivity extends AppCompatActivity {
     }
 
     private class rightHandlerCallBack implements Handler.Callback {
+        private int currentImgId;
         public boolean handleMessage(Message m) {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
-            randomImage.setImageResource(images.get(random.nextInt(3)));
+            float randf = random.nextFloat();
+            if (randf<=0.8){
+                currentImgId = generic_images.get(random.nextInt(3));
+                randomImage.setImageResource(currentImgId);
+
+            }
+            else{
+                currentImgId = exempt_images.get(random.nextInt(2));
+                randomImage.setImageResource(currentImgId);
+            }
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            Animation animation = new TranslateAnimation(0, 0, -500, 1200);
+
+            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+
             animation.setInterpolator(new LinearInterpolator());
             animation.setDuration(4000);
             animation.setFillAfter(false);
@@ -119,11 +189,39 @@ public class SingleModeActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if (currentLayout.getId() == rightCurrent) {
+                    if (currentLayout.getId() == rightCurrent ^ reverse) {
                         if (!gameEnd){
-                            points += 1;}
+//                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
+//                                    Toast.LENGTH_SHORT).show();
+                            points += 1;
+                            if (exempt_images_set.contains(currentImgId)){ //current image in exempt set
+//                                Toast.makeText(getApplicationContext(), "found an exempt image",
+//                                        Toast.LENGTH_SHORT).show();
+                                if (!exempt_on){
+                                    exempt_on = true;
+                                }
+                                exempt_val += 2;
+
+                            }
+
+                        }
+
+                            TextView score = (TextView) findViewById(R.id.ScoreNum);
+                            score.setText(Integer.toString(points));
+
+
                         currentLayout.removeView(randomImage);
-                    } else {
+                    }
+                    else if (exempt_on){ //exempt is on
+                        currentLayout.removeView(randomImage);
+                        exempt_val --;
+                        if (exempt_val==0){
+                            exempt_on = false;
+                        }
+
+                    }
+
+                    else {
                         gameEnd = true;
                         RelativeLayout rightHalf = (RelativeLayout) findViewById(R.id.righthalf);
                         rightHalf.setOnClickListener(null);
@@ -168,15 +266,28 @@ public class SingleModeActivity extends AppCompatActivity {
     }
 
     private class leftHandlerCallBack implements Handler.Callback {
+        private int currentImgId;
         public boolean handleMessage(Message m) {
             final ImageView randomImage = new ImageView(SingleModeActivity.this);
-            randomImage.setImageResource(images.get(random.nextInt(3)));
+            float randf = random.nextFloat();
+            if (randf<=0.8){ //control the prob for different imgs
+                currentImgId = generic_images.get(random.nextInt(3));
+                randomImage.setImageResource(currentImgId);
+            }
+            else{
+                currentImgId = exempt_images.get(random.nextInt(2));
+                randomImage.setImageResource(currentImgId);
+            }
+            //randomImage.setImageResource(generic_images.get(random.nextInt(3)));
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-            Animation animation = new TranslateAnimation(0, 0, -500, 1200);
+
+            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+
+
             animation.setInterpolator(new LinearInterpolator());
             animation.setDuration(4000);
             animation.setFillAfter(false);
@@ -190,9 +301,34 @@ public class SingleModeActivity extends AppCompatActivity {
                 public void onAnimationEnd(Animation animation) {
                     if (currentLayout.getId() == leftCurrent) {
                         if (!gameEnd){
-                        points += 1;}
+                            points += 1;
+//                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
+//                                    Toast.LENGTH_SHORT).show();
+                            if (exempt_images_set.contains(currentImgId)){ //current image in exempt set
+//                                Toast.makeText(getApplicationContext(), "found an exempt Img",
+//                                        Toast.LENGTH_SHORT).show();
+                                if (!exempt_on){
+                                    exempt_on = true;
+                                }
+                                exempt_val += 2;
+
+                            }
+                            TextView score = (TextView) findViewById(R.id.ScoreNum);
+                            score.setText(Integer.toString(points));
+
+                        }
                         currentLayout.removeView(randomImage);
-                    } else {
+                    }
+                    else if (exempt_on){ //exempt is on
+                        currentLayout.removeView(randomImage);
+                        exempt_val --;
+                        if (exempt_val==0){
+                            exempt_on = false;
+                        }
+
+                    }
+
+                    else {
                         gameEnd = true;
                         RelativeLayout leftHalf = (RelativeLayout) findViewById(R.id.lefthalf);
                         leftHalf.setOnClickListener(null);

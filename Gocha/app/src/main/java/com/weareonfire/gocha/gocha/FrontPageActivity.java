@@ -27,6 +27,21 @@ public class FrontPageActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 Intent toLoginActivityIntent = new Intent(FrontPageActivity.this, SingleModeActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putBoolean("reverse", false);
+                toLoginActivityIntent.putExtras(bundle);
+                startActivity(toLoginActivityIntent);
+            }
+        });
+
+        Button hardModeButton = (Button) findViewById(R.id.hard_mode);
+        hardModeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toLoginActivityIntent = new Intent(FrontPageActivity.this, SingleModeActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putBoolean("reverse", true);
+                toLoginActivityIntent.putExtras(bundle);
                 startActivity(toLoginActivityIntent);
             }
         });

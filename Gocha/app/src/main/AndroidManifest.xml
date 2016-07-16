@@ -9,17 +9,22 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+=======
+        android:theme="@style/AppTheme">
+        <service android:name="MusicService"
+                android:enabled="true"/>
+>>>>>>> 78e08f4fe8648539d3198294d4de1bc3eaa98de2
         <activity
             android:name=".FrontPageActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
