@@ -64,6 +64,9 @@ public class SingleModeActivity extends AppCompatActivity {
     Context context = this;
     Boolean soundOn;
     Boolean musicOn;
+    int pearlsnum;
+
+    TextView pearlsnumview;
 
     private MediaPlayer mPlayer;
 
@@ -80,9 +83,13 @@ public class SingleModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_mode);
 
+        pearlsnumview = (TextView)findViewById(R.id.mypearls);
+
         sharedPref = context.getSharedPreferences("preferences",Context.MODE_PRIVATE);
         soundOn = sharedPref.getBoolean("soundOn", true);
         musicOn = sharedPref.getBoolean("musicOn", true);
+        pearlsnum = sharedPref.getInt("pearls", 0);
+        pearlsnumview.setText(pearlsnum);
         editor = sharedPref.edit();
         mPlayer = MediaPlayer.create(this, R.raw.music1);
         if (mPlayer != null) {
@@ -160,6 +167,18 @@ public class SingleModeActivity extends AppCompatActivity {
                 int tmp = leftCurrent;
                 leftCurrent = leftNext;
                 leftNext = tmp;
+            }
+        });
+
+        final ImageView pearls = (ImageView) findViewById(R.id.pearls);
+        pearls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pearlsnum > 0){
+                    exempt_val += 1;
+                    pearlsnum --;
+                    pearlsnumview.setText(pearlsnum);
+                }
             }
         });
     }
@@ -437,5 +456,6 @@ public class SingleModeActivity extends AppCompatActivity {
             rHandler.removeMessages(3);}
 
         gameEnd = true;
+
     };
 }
