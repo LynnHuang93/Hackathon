@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -193,10 +192,10 @@ public class SingleModeActivity extends AppCompatActivity {
                         if (!gameEnd){
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
 //                                    Toast.LENGTH_SHORT).show();
-                            points += 1;
                             if (currentImgId==exempt_image_id){ //current image is the exempt pic
 //                                Toast.makeText(getApplicationContext(), "found an exempt image",
 //                                        Toast.LENGTH_SHORT).show();
+                                points += 1;
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
@@ -206,7 +205,7 @@ public class SingleModeActivity extends AppCompatActivity {
 
 
                             }
-                            if (currentImgId==ink_image_id){ //current image is the ink trigger
+                            else if (currentImgId==ink_image_id){ //current image is the ink trigger
                                 final ImageView inkImage = (ImageView) findViewById(R.id.ink);
                                 inkImage.setVisibility(View.VISIBLE);
                                 Animation fadeOut = new AlphaAnimation(1, 0);
@@ -223,6 +222,9 @@ public class SingleModeActivity extends AppCompatActivity {
                                 });
                                 inkImage.startAnimation(fadeOut);
 
+                            }
+                            else{
+                                points += 1;
                             }
 
                         }
@@ -328,12 +330,12 @@ public class SingleModeActivity extends AppCompatActivity {
                 public void onAnimationEnd(Animation animation) {
                     if (currentLayout.getId() == leftCurrent) {
                         if (!gameEnd){
-                            points += 1;
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
 //                                    Toast.LENGTH_SHORT).show();
                             if (currentImgId==exempt_image_id){ //current image in exempt set
 //                                Toast.makeText(getApplicationContext(), "found an exempt Img",
 //                                        Toast.LENGTH_SHORT).show();
+                                points += 1;
                                 if (!exempt_on){
                                     exempt_on = true;
                                 }
@@ -342,7 +344,7 @@ public class SingleModeActivity extends AppCompatActivity {
                                 exempt.setText(Integer.toString(exempt_val));
 
                             }
-                            if (currentImgId==ink_image_id){ //current image is the ink trigger
+                            else if (currentImgId==ink_image_id){ //current image is the ink trigger
                                 final ImageView inkImage = (ImageView) findViewById(R.id.ink);
                                 inkImage.setVisibility(View.VISIBLE);
                                 Animation fadeOut = new AlphaAnimation(1, 0);
@@ -359,6 +361,9 @@ public class SingleModeActivity extends AppCompatActivity {
                                 });
                                 inkImage.startAnimation(fadeOut);
 
+                            }
+                            else{
+                                points += 1;
                             }
                             TextView score = (TextView) findViewById(R.id.ScoreNum);
                             score.setText(Integer.toString(points));
