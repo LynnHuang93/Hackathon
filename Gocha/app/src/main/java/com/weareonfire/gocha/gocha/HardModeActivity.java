@@ -1,12 +1,9 @@
 package com.weareonfire.gocha.gocha;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -50,36 +47,36 @@ public class HardModeActivity extends AppCompatActivity {
     private int exempt_val = 0;
     //private boolean reverse = false;
 
-
+    private MediaPlayer mPlayer;
     //--music
-    private boolean mIsBound = false;
-    private MusicService mServ;
-    private ServiceConnection Scon =new ServiceConnection(){
-
-        public void onServiceConnected(ComponentName name, IBinder
-                binder) {
-            mServ = ((MusicService.ServiceBinder)binder).getService();
-        }
-
-        public void onServiceDisconnected(ComponentName name) {
-            mServ = null;
-        }
-    };
-
-    void doBindService(){
-        bindService(new Intent(this,MusicService.class),
-                Scon, Context.BIND_AUTO_CREATE);
-        mIsBound = true;
-    }
-
-    void doUnbindService()
-    {
-        if(mIsBound)
-        {
-            unbindService(Scon);
-            mIsBound = false;
-        }
-    }
+//    private boolean mIsBound = false;
+//    private MusicService mServ;
+//    private ServiceConnection Scon =new ServiceConnection(){
+//
+//        public void onServiceConnected(ComponentName name, IBinder
+//                binder) {
+//            mServ = ((MusicService.ServiceBinder)binder).getService();
+//        }
+//
+//        public void onServiceDisconnected(ComponentName name) {
+//            mServ = null;
+//        }
+//    };
+//
+//    void doBindService(){
+//        bindService(new Intent(this,MusicService.class),
+//                Scon, Context.BIND_AUTO_CREATE);
+//        mIsBound = true;
+//    }
+//
+//    void doUnbindService()
+//    {
+//        if(mIsBound)
+//        {
+//            unbindService(Scon);
+//            mIsBound = false;
+//        }
+//    }
 
 
     @Override
@@ -90,11 +87,17 @@ public class HardModeActivity extends AppCompatActivity {
         //Intent intentstream = getIntent();
         //reverse =intentstream.getBooleanExtra("reverse",false);
 
-        doBindService();
+        //doBindService();
 
-        Intent music = new Intent();
-        music.setClass(this,MusicService.class);
-        startService(music);
+        //Intent music = new Intent();
+        //music.setClass(this,MusicService.class);
+        //startService(music);
+        mPlayer = MediaPlayer.create(this, R.raw.music1);
+        if (mPlayer != null) {
+            mPlayer.setLooping(true);
+            mPlayer.setVolume(100, 100);
+        }
+        mPlayer.start();
 
         tracks.add ((RelativeLayout) findViewById(R.id.leftout));
         tracks.add ((RelativeLayout) findViewById(R.id.leftin));
@@ -411,9 +414,10 @@ public class HardModeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        mServ.stopMusic();
-        doUnbindService();
+    protected void onStop(){
+        super.onStop();
+        mPlayer.stop();
+        //mServ.stopMusic();
+        //doUnbindService();
     }
 }
