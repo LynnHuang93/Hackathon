@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/pearls"
+                android:layout_marginTop="@dimen/score_mergin"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_toLeftOf="@+id/mypearls"
@@ -75,6 +76,7 @@
                 android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/anopts"
+                android:layout_marginTop="@dimen/score_mergin"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_toLeftOf="@+id/myocts"
