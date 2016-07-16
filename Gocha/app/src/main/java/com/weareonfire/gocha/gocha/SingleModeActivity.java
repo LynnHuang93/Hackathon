@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -356,7 +357,7 @@ public class SingleModeActivity extends AppCompatActivity {
         leftHalf.setOnClickListener(null);
         LinearLayout gameOver = (LinearLayout) findViewById(R.id.gameover);
         TextView gameOverText = (TextView)findViewById(R.id.gameoverpoints);
-        gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 4) );
+        gameOverText.setText("Points: " + points + " Coins Gain: " + (points / 10) );
         Button restart = (Button) findViewById(R.id.restart);
         Button quit = (Button) findViewById(R.id.quit);
         restart.setOnClickListener(new View.OnClickListener() {
@@ -378,6 +379,8 @@ public class SingleModeActivity extends AppCompatActivity {
 
         int coins = sharedPref.getInt("coins", 0 );
         editor.putInt("coins",coins + points / 10);
+        coins = sharedPref.getInt("coins",0);
+        Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
         lHandler.removeMessages(0);
         lHandler.removeMessages(1);
         rHandler.removeMessages(2);
