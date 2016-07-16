@@ -11,8 +11,9 @@
     tools:context="com.weareonfire.gocha.gocha.StoreActivity">
 
     <LinearLayout
+        android:id="@+id/items"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,4 +137,37 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/moneyicon"
+            android:layout_width="50dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_monetization_on_white_24dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight=".50"
+            android:text="0"
+            android:textColor="@color/White"
+            android:textSize="60dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/moneyicon"
+            android:layout_toEndOf="@+id/moneyicon" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_weight=".30"
+            android:background="@color/button"
+            android:text="BUY"
+            android:textColor="@color/White"
+            android:textSize="24dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/button" />
+    </RelativeLayout>
 </RelativeLayout>
