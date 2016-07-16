@@ -80,7 +80,7 @@ public class HardModeActivity extends AppCompatActivity {
         good_images.add(R.drawable.goodlittlefish2);
         bad_images.add(R.drawable.badshark);
         bad_images.add(R.drawable.badwhalepink);
-        exempt_image_id = R.drawable.ic_pregnant_woman_black_24dp; //assign preg woman to exempt_img_id
+        exempt_image_id = R.drawable.pearlexempt; //assign preg woman to exempt_img_id
         ink_image_id = R.drawable.octopus; //assign rowing to ink_img_id
         //exempt_images.add(R.drawable.ic_rowing_black_24dp);
         //exempt_images_set.addAll(exempt_images);
@@ -149,7 +149,9 @@ public class HardModeActivity extends AppCompatActivity {
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
 
-            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+//            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+            float targetY = (float)(currentLayout.getBottom());
+            Animation animation = new TranslateAnimation(0, 0, -500, targetY);
 
             animation.setInterpolator(new LinearInterpolator());
             animation.setDuration(4000);
@@ -274,7 +276,9 @@ public class HardModeActivity extends AppCompatActivity {
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
 
-            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+//            Animation animation = new TranslateAnimation(0, 0, -500, 900);
+            float targetY = (float)(currentLayout.getBottom());
+            Animation animation = new TranslateAnimation(0, 0, -500, targetY);
 
 
             animation.setInterpolator(new LinearInterpolator());

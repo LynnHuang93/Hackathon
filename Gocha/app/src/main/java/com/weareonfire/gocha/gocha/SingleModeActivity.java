@@ -79,7 +79,7 @@ public class SingleModeActivity extends AppCompatActivity {
 
         generic_images.add(R.drawable.goodlittlefish1);
         generic_images.add(R.drawable.goodlittlefish2);
-        exempt_image_id = R.drawable.ic_pregnant_woman_black_24dp; //assign preg woman to exempt_img_id
+        exempt_image_id = R.drawable.pearlexempt; //assign preg woman to exempt_img_id
         ink_image_id = R.drawable.octopus; //assign rowing to ink_img_id
         //exempt_images.add(R.drawable.ic_rowing_black_24dp);
         //exempt_images_set.addAll(exempt_images);
