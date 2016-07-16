@@ -36,9 +36,6 @@ public class FrontPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent toLoginActivityIntent = new Intent(FrontPageActivity.this, HardModeActivity.class);
-//                Bundle bundle=new Bundle();
-//                bundle.putBoolean("reverse", true);
-//                toLoginActivityIntent.putExtras(bundle);
                 startActivity(toLoginActivityIntent);
             }
         });

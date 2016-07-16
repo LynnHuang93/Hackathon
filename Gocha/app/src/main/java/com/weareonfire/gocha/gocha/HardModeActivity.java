@@ -118,8 +118,8 @@ public class HardModeActivity extends AppCompatActivity {
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
-                RelativeLayout rightNextView = (RelativeLayout)findViewById(leftNext);
-                rightNextView.addView(randomImage, layoutParams);
+                RelativeLayout leftNextView = (RelativeLayout)findViewById(leftNext);
+                leftNextView.addView(randomImage, layoutParams);
                 int tmp = leftCurrent;
                 leftCurrent = leftNext;
                 leftNext = tmp;
@@ -148,10 +148,16 @@ public class HardModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
+            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
+            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            int totalheight = parent.getMeasuredHeight();
+            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            final Integer imageheight = randomImage.getMeasuredHeight();
+            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
 
 //            Animation animation = new TranslateAnimation(0, 0, -500, 900);
-            float targetY = (float)(currentLayout.getBottom());
-            Animation animation = new TranslateAnimation(0, 0, -500, targetY);
+            //float targetY = (float)(currentLayout.getBottom());
+            //Animation animation = new TranslateAnimation(0, 0, -500, targetY);
 
             animation.setInterpolator(new LinearInterpolator());
             animation.setDuration(4000);
@@ -275,10 +281,15 @@ public class HardModeActivity extends AppCompatActivity {
             layoutParams.setMargins(0, - randomImage.getHeight(), 0, randomImage.getHeight());
             final RelativeLayout currentLayout = tracks.get(m.what);
             currentLayout.addView(randomImage,layoutParams);
-
+            LinearLayout parent = (LinearLayout) findViewById(R.id.parent);
+            parent.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            int totalheight = parent.getMeasuredHeight();
+            randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            final Integer imageheight = randomImage.getMeasuredHeight();
+            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
 //            Animation animation = new TranslateAnimation(0, 0, -500, 900);
-            float targetY = (float)(currentLayout.getBottom());
-            Animation animation = new TranslateAnimation(0, 0, -500, targetY);
+            //float targetY = (float)(currentLayout.getBottom());
+            //Animation animation = new TranslateAnimation(0, 0, -500, targetY);
 
 
             animation.setInterpolator(new LinearInterpolator());

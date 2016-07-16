@@ -20,7 +20,7 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/exampt"
+                android:id="@+id/exempt"
                 android:layout_width="0dp"
                 android:src="@drawable/pearlexempt"
                 android:layout_height="95dp"
@@ -33,7 +33,7 @@
                 <TextView
                     android:text="Pearl"
                     android:textColor="@color/White"
-                    android:id="@+id/examptName"
+                    android:id="@+id/exemptName"
                     android:textSize="20sp"
                     android:layout_margin="1dp"
                     android:textStyle="bold"
@@ -44,15 +44,15 @@
                     android:text="Remain: 0"
                     android:layout_margin="1dp"
                     android:textColor="@color/White"
-                    android:id="@+id/examptRestNum"
+                    android:id="@+id/exemptRestNum"
                     android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_gravity="top"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:text="Exampt you from 2 miss"
+                    android:text="Exempt you from 2 miss (5 coins)"
                     android:textColor="@color/White"
-                    android:id="@+id/examptDes"
+                    android:id="@+id/exemptDes"
                     android:layout_margin="1dp"
                     android:layout_gravity="bottom"
                     android:layout_width="match_parent"
@@ -61,17 +61,18 @@
 
             <ImageView
                 android:src = "@drawable/ic_remove_circle_white_24dp"
-                android:id="@+id/examptMinus"
+                android:id="@+id/exemptMinus"
                 android:layout_width="0dp"
                 android:layout_marginRight="4dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.10"/>
             <RelativeLayout
                 android:layout_width="0dp"
+
                 android:layout_weight="0.10"
                 android:layout_height="match_parent">
                 <TextView
-                    android:id="@+id/examptNum"
+                    android:id="@+id/exemptNum"
                     android:layout_width="wrap_content"
                     android:text="0"
                     android:textSize="45sp"
@@ -81,7 +82,7 @@
             </RelativeLayout>
             <ImageView
                 android:src = "@drawable/ic_add_circle_white_24dp"
-                android:id="@+id/examptPlus"
+                android:id="@+id/exemptPlus"
                 android:layout_marginLeft="4dp"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -167,7 +168,6 @@
         </LinearLayout>
     </LinearLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
@@ -181,6 +181,7 @@
             android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
+            android:id="@+id/coin_num"
             android:layout_weight=".50"
             android:text="0"
             android:textColor="@color/White"
