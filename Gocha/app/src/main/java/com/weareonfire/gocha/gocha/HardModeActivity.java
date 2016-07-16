@@ -27,9 +27,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class SingleModeActivity extends AppCompatActivity {
+public class HardModeActivity extends AppCompatActivity {
     List<RelativeLayout> tracks = new ArrayList<>(4);
-    List<Integer> generic_images = new ArrayList<>(3);
+    List<Integer> good_images = new ArrayList<>(2);
+    List<Integer> bad_images = new ArrayList<>(2);
     int exempt_image_id; //id for the exempt pic
     int ink_image_id; //id for the ink pic
     Set<Integer> exempt_images_set = new HashSet<>();
@@ -100,9 +101,10 @@ public class SingleModeActivity extends AppCompatActivity {
         tracks.add ((RelativeLayout) findViewById(R.id.rightin));
         tracks.add ((RelativeLayout) findViewById(R.id.rightout));
 
-        generic_images.add(R.drawable.ic_grade_black_24dp);
-        generic_images.add(R.drawable.ic_invert_colors_black_24dp);
-        generic_images.add(R.drawable.ic_report_problem_black_24dp);
+        good_images.add(R.drawable.ic_grade_black_24dp);
+        good_images.add(R.drawable.ic_invert_colors_black_24dp);
+        bad_images.add(R.drawable.ic_report_problem_black_24dp);
+        bad_images.add(R.drawable.ic_pets_black_24dp);
         exempt_image_id = R.drawable.ic_pregnant_woman_black_24dp; //assign preg woman to exempt_img_id
         ink_image_id = R.drawable.ic_rowing_black_24dp; //assign rowing to ink_img_id
         //exempt_images.add(R.drawable.ic_rowing_black_24dp);
@@ -120,7 +122,7 @@ public class SingleModeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                ImageView randomImage = new ImageView(SingleModeActivity.this);
+                ImageView randomImage = new ImageView(HardModeActivity.this);
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout rightCurrentView = (RelativeLayout)findViewById(rightCurrent);
                 rightCurrentView.removeAllViews();
@@ -137,7 +139,7 @@ public class SingleModeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                ImageView randomImage = new ImageView(SingleModeActivity.this);
+                ImageView randomImage = new ImageView(HardModeActivity.this);
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
@@ -152,18 +154,15 @@ public class SingleModeActivity extends AppCompatActivity {
 
     private class rightHandlerCallBack implements Handler.Callback {
         public boolean handleMessage(Message m) {
-            final ImageView randomImage = new ImageView(SingleModeActivity.this);
+            final ImageView randomImage = new ImageView(HardModeActivity.this);
             float randf = random.nextFloat();
             final int currentImgId;
-            if (randf<=0.8){
-                currentImgId = generic_images.get(random.nextInt(3));
+            if (randf<=0.9){
+                currentImgId = bad_images.get(random.nextInt(2));
                 randomImage.setImageResource(currentImgId);
 
             }
-            else if (randf>0.8 && randf<=0.9){
-                currentImgId = exempt_image_id;
-                randomImage.setImageResource(currentImgId);
-            }
+
             else{
                 currentImgId = ink_image_id;
                 randomImage.setImageResource(currentImgId);
@@ -188,41 +187,12 @@ public class SingleModeActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if (currentLayout.getId() == rightCurrent) {
+                    if (currentLayout.getId() != rightCurrent) {
                         if (!gameEnd){
 //                            Toast.makeText(getApplicationContext(), String.valueOf(currentImgId),
 //                                    Toast.LENGTH_SHORT).show();
                             points += 1;
-                            if (currentImgId==exempt_image_id){ //current image is the exempt pic
-//                                Toast.makeText(getApplicationContext(), "found an exempt image",
-//                                        Toast.LENGTH_SHORT).show();
-                                if (!exempt_on){
-                                    exempt_on = true;
-                                }
-                                exempt_val += 2;
-                                TextView exempt = (TextView) findViewById(R.id.ExemptNum);
-                                exempt.setText(Integer.toString(exempt_val));
 
-
-                            }
-                            else if (currentImgId==ink_image_id){ //current image is the ink trigger
-                                final ImageView inkImage = (ImageView) findViewById(R.id.ink);
-                                inkImage.setVisibility(View.VISIBLE);
-                                Animation fadeOut = new AlphaAnimation(1, 0);
-                                fadeOut.setInterpolator(new AccelerateInterpolator());
-                                fadeOut.setDuration(2000);
-                                fadeOut.setAnimationListener(new Animation.AnimationListener()
-                                {
-                                    public void onAnimationEnd(Animation animation)
-                                    {
-                                        inkImage.setVisibility(View.GONE);
-                                    }
-                                    public void onAnimationRepeat(Animation animation) {}
-                                    public void onAnimationStart(Animation animation) {}
-                                });
-                                inkImage.startAnimation(fadeOut);
-
-                            }
 
                         }
 
@@ -233,6 +203,24 @@ public class SingleModeActivity extends AppCompatActivity {
                         currentLayout.removeView(randomImage);
                     }
                     else if (exempt_on){ //exempt is on
+                        if (currentImgId==ink_image_id){ //current image is the ink trigger
+                            final ImageView inkImage = (ImageView) findViewById(R.id.ink);
+                            inkImage.setVisibility(View.VISIBLE);
+                            Animation fadeOut = new AlphaAnimation(1, 0);
+                            fadeOut.setInterpolator(new AccelerateInterpolator());
+                            fadeOut.setDuration(2000);
+                            fadeOut.setAnimationListener(new Animation.AnimationListener()
+                            {
+                                public void onAnimationEnd(Animation animation)
+                                {
+                                    inkImage.setVisibility(View.GONE);
+                                }
+                                public void onAnimationRepeat(Animation animation) {}
+                                public void onAnimationStart(Animation animation) {}
+                            });
+                            inkImage.startAnimation(fadeOut);
+
+                        }
                         currentLayout.removeView(randomImage);
                         exempt_val --;
                         TextView exempt = (TextView) findViewById(R.id.ExemptNum);
@@ -263,7 +251,7 @@ public class SingleModeActivity extends AppCompatActivity {
                         quit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
+                                Intent intent = new Intent(HardModeActivity.this, FrontPageActivity.class);
                                 startActivity(intent);
                             }
                         });
@@ -289,11 +277,11 @@ public class SingleModeActivity extends AppCompatActivity {
 
     private class leftHandlerCallBack implements Handler.Callback {
         public boolean handleMessage(Message m) {
-            final ImageView randomImage = new ImageView(SingleModeActivity.this);
+            final ImageView randomImage = new ImageView(HardModeActivity.this);
             float randf = random.nextFloat();
             final int currentImgId;
             if (randf<=0.8){ //control the prob for different imgs
-                currentImgId = generic_images.get(random.nextInt(3));
+                currentImgId = good_images.get(random.nextInt(2));
                 randomImage.setImageResource(currentImgId);
             }
             else if (randf>0.8 && randf<=0.9){
@@ -397,7 +385,7 @@ public class SingleModeActivity extends AppCompatActivity {
                         quit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(SingleModeActivity.this, FrontPageActivity.class);
+                                Intent intent = new Intent(HardModeActivity.this, FrontPageActivity.class);
                                 startActivity(intent);
                             }
                         });
