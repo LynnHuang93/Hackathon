@@ -18,9 +18,10 @@ public class StoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_store);
         final SharedPreferences sharedPref = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
-        int pearls = sharedPref.getInt("pearls", 0 ); //currently owned pearls
-        int octs = sharedPref.getInt("octs", 0); //currently owned octs
-        final int coins = sharedPref.getInt("coins", 0);
+        final int pearls = sharedPref.getInt("pearls", 0 ); //currently owned pearls
+        final int octs = sharedPref.getInt("octs", 0); //currently owned octs
+        //final int coins = sharedPref.getInt("coins", 0); //real coin number retrieved from the sharedPref
+        final int coins = 10;
         final TextView balance = (TextView) findViewById(R.id.coin_num); //current balance
         balance.setText(Integer.toString(coins));
         final int pearl_num[] = {0};
@@ -28,6 +29,10 @@ public class StoreActivity extends AppCompatActivity {
         final int coin_num[] = {coins}; //coin number for the current buying session
         final TextView show_pearls = (TextView) findViewById(R.id.exemptNum);
         final TextView show_octs = (TextView) findViewById(R.id.octNum);
+        final TextView remain_pearls = (TextView) findViewById(R.id.exemptRestNum);
+        final TextView remain_octs = (TextView) findViewById(R.id.octRestNum);
+        remain_pearls.setText(String.format("remain: %d", pearls));
+        remain_octs.setText(String.format("remain: %d", octs));
         ImageView pearlMinus = (ImageView) findViewById(R.id.exemptMinus);
         pearlMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +49,7 @@ public class StoreActivity extends AppCompatActivity {
         pearlPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (coins>=5){
+                if (coin_num[0]>=5){
                     pearl_num[0]++;
                     coin_num[0]-=5;
                     show_pearls.setText(Integer.toString(pearl_num[0]));
@@ -68,7 +73,7 @@ public class StoreActivity extends AppCompatActivity {
         octPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (coins>=5){
+                if (coin_num[0]>=5){
                     oct_num[0]++;
                     coin_num[0]-=5;
                     show_octs.setText(Integer.toString(oct_num[0]));
@@ -82,8 +87,12 @@ public class StoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editor.putInt("coins",coin_num[0]);
-                editor.putInt("pearls",pearl_num[0]);
-                editor.putInt("octs",oct_num[0]);
+                int cur_pearls = pearls + pearl_num[0];
+                int cur_octs = octs + oct_num[0];
+                editor.putInt("pearls",cur_pearls);
+                editor.putInt("octs",cur_octs);
+                remain_pearls.setText(String.format("remain: %d",cur_pearls));
+                remain_octs.setText(String.format("remain: %d", cur_octs));
             }
         });
     }

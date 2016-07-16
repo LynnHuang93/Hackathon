@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -117,8 +118,8 @@ public class SingleModeActivity extends AppCompatActivity {
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
-                RelativeLayout rightNextView = (RelativeLayout)findViewById(leftNext);
-                rightNextView.addView(randomImage, layoutParams);
+                RelativeLayout leftNextView = (RelativeLayout)findViewById(leftNext);
+                leftNextView.addView(randomImage, layoutParams);
                 int tmp = leftCurrent;
                 leftCurrent = leftNext;
                 leftNext = tmp;
@@ -155,11 +156,11 @@ public class SingleModeActivity extends AppCompatActivity {
             int totalheight = parent.getMeasuredHeight();
             randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
+            Animation animation = new TranslateAnimation(0, 0, -500, totalheight-imageheight/2);
             //Animation animation = new TranslateAnimation(0, 0, -500, 900);
 
             animation.setInterpolator(new LinearInterpolator());
-            animation.setDuration(4000);
+            animation.setDuration(6000);
             animation.setFillAfter(false);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -267,11 +268,11 @@ public class SingleModeActivity extends AppCompatActivity {
             int totalheight = parent.getMeasuredHeight();
             randomImage.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             final Integer imageheight = randomImage.getMeasuredHeight();
-            Animation animation = new TranslateAnimation(0, 0, -500, totalheight + imageheight / 2);
+            Animation animation = new TranslateAnimation(0, 0, -500, totalheight-imageheight/2);
 
 
             animation.setInterpolator(new LinearInterpolator());
-            animation.setDuration(4000);
+            animation.setDuration(6000);
             animation.setFillAfter(false);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -388,7 +389,7 @@ public class SingleModeActivity extends AppCompatActivity {
         int coins = sharedPref.getInt("coins", 0 );
         editor.putInt("coins",coins + points / 10);
         coins = sharedPref.getInt("coins",0);
-        //Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), String.valueOf(coins), Toast.LENGTH_SHORT).show();
         lHandler.removeMessages(0);
         lHandler.removeMessages(1);
         rHandler.removeMessages(2);

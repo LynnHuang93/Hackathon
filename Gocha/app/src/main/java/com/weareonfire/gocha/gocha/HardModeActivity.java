@@ -118,8 +118,8 @@ public class HardModeActivity extends AppCompatActivity {
                 randomImage.setImageResource(R.drawable.ic_record_voice_over_black_24dp);
                 RelativeLayout leftCurrentView = (RelativeLayout)findViewById(leftCurrent);
                 leftCurrentView.removeAllViews();
-                RelativeLayout rightNextView = (RelativeLayout)findViewById(leftNext);
-                rightNextView.addView(randomImage, layoutParams);
+                RelativeLayout leftNextView = (RelativeLayout)findViewById(leftNext);
+                leftNextView.addView(randomImage, layoutParams);
                 int tmp = leftCurrent;
                 leftCurrent = leftNext;
                 leftNext = tmp;
