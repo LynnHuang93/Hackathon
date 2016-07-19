@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/backGround"
+    tools:context=".SettingActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backGround"
+        android:orientation="vertical"
+        tools:context=".MainActivity"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:textSize="40sp"
+            android:layout_gravity="center"
+            android:gravity="top"
+            android:textColor="@color/colorPrimary"
+            android:text="Setting" />
+
+        <Switch
+            android:id="@+id/soundOn"
+            android:layout_width="match_parent"
+            android:textColor="@color/White"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:track="@drawable/track"
+            android:layout_marginTop="20dp"
+            android:text="Sound Effect" />
+
+        <Switch
+            android:id="@+id/musicOn"
+            android:layout_width="match_parent"
+            android:textColor="@color/White"
+            android:textSize="40sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:track="@drawable/track"
+            android:layout_marginTop="20dp"
+            android:text="Music" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
