@@ -13,22 +13,18 @@
     tools:showIn="@layout/activity_front_page"
     tools:context="com.weareonfire.gocha.gocha.FrontPageActivity">
 
-    <TextView
+    <ImageView
         android:id="@+id/title"
-        android:text="Gocha"
-        android:layout_marginTop="@dimen/title_horizontal_margin"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/White"
-        android:textSize="@dimen/title_text_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/gametitle" />
 
     <Button
         android:id="@+id/single_mode"
-        android:text="Single Mode"
+        android:text="Simple Mode"
         android:textColor="@color/White"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:background="@color/colorAccent"
+        android:background="@color/button"
         android:layout_below="@+id/title"
         android:layout_width="@dimen/front_page_button_width"
         android:layout_height="wrap_content"
@@ -36,14 +32,54 @@
         />
 
     <Button
-        android:id="@+id/combat_mode"
-        android:text="Combat Mode"
+        android:id="@+id/hard_mode"
+        android:text="Hard Mode"
         android:textColor="@color/White"
-        android:background="@color/colorAccent"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@color/button"
         android:layout_below="@+id/single_mode"
         android:layout_width="@dimen/front_page_button_width"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_widgets_white_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        android:src="@drawable/ic_local_grocery_store_white_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/fab"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        android:src="@drawable/ic_settings_white_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/hints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/setting"
+        android:layout_toLeftOf="@+id/store"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        android:src="@drawable/ic_info_outline_white_24dp" />
 
 </RelativeLayout>

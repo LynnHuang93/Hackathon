@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#53555e</color>
+    <color name="colorPrimary">#6BC8F2</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="backGround">#493f43</color>
-    <color name="Button">#e92c77</color>
-    <color name="White">#ffffff</color>
+    <color name="colorAccent">#6BC8F2</color>
+    <color name="colorNoneBlue1">#F9C26F</color>    <!-- -->
+    <color name="colorNoneBlue2">#EDF1BB</color>    <!-- -->
+    <color name="colorNoneBlue3">#F4B4D0</color>          <!-- -->
+    <color name="backGround">#A0D8EF</color>
+    <color name="button">#6BC8F2</color>
+    <color name="White">#FFFFFF</color>
+    <color name="GameOver">#FCFBF4</color>
+    <color name="finishbutton">#f4b4b0</color>
+
 </resources>
+
+
